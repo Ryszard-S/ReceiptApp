@@ -15,7 +15,7 @@ class Receipt(models.Model):
 
 
 class Item(models.Model):
-    receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
+    receipt = models.ForeignKey(Receipt, related_name='items', on_delete=models.CASCADE)
     name = models.CharField(max_length=130)
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     category = models.ForeignKey('Category', models.DO_NOTHING, blank=True, null=True)

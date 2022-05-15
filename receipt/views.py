@@ -1,12 +1,11 @@
 # Create your views here.
-from rest_framework import generics
+from rest_framework import generics, permissions
 
-from receipt.models import Shop
-from receipt.serializers import ShopSerializer
+from receipt.models import Shop, Receipt
+from receipt.serializers import ShopSerializer, ReceiptSerializer
 
 
 class ShopListView(generics.ListAPIView):
-    print()
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
     lookup_field = ['name']
@@ -22,4 +21,7 @@ class ShopListView(generics.ListAPIView):
         return qs
 
 
-
+class ReceiptsListAPIView(generics.ListAPIView):
+    queryset = Receipt.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ReceiptSerializer
