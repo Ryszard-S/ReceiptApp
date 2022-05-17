@@ -72,3 +72,19 @@ class CategoryListCreateAPIView(generics.ListCreateAPIView):
         self.perform_create(serializer)
 
         return Response(data=serializer.data)
+
+class CategoryDestroyAPIView(generics.DestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CategorySerializer
+    queryset= Category.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        print(request.data , args, kwargs)
+        user = self.request.user
+        try:
+            category = Category.objects.get(id=kwargs['pk'], user=user)
+            category.user.remove(user)
+        except:
+            return Response(status=404, data={'message': 'Category not found'})
+
+        return Response(data={'message': 'ok'})

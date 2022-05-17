@@ -1,0 +1,28 @@
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: haslo
+      POSTGRES_DB: receiptdb
+    ports:
+      - 5432:5432
+
+    volumes:
+        - ./sql/postgres-data:/var/lib/postgresql/data
+        # copy the sql script to create tables
+        - ./sql/receipt.sql:/docker-entrypoint-initdb.d/receipt.sql
+        # copy the sql script to fill tables
+        # - ./sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
+
+
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+

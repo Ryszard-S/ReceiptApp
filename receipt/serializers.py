@@ -39,6 +39,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
         return category
 
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name')
+        instance.save()
+        return instance
+
 
 class ItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=False, read_only=False)
