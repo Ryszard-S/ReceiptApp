@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-05-15 23:19:15
+-- Started on 2022-05-17 20:11:56
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -52,7 +52,7 @@ CREATE SEQUENCE public.auth_group_id_seq
 ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3515 (class 0 OID 0)
+-- TOC entry 3512 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -90,7 +90,7 @@ CREATE SEQUENCE public.auth_group_permissions_id_seq
 ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3516 (class 0 OID 0)
+-- TOC entry 3513 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -130,7 +130,7 @@ CREATE SEQUENCE public.auth_permission_id_seq
 ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3517 (class 0 OID 0)
+-- TOC entry 3514 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -190,7 +190,7 @@ CREATE SEQUENCE public.auth_user_groups_id_seq
 ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3518 (class 0 OID 0)
+-- TOC entry 3515 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -215,7 +215,7 @@ CREATE SEQUENCE public.auth_user_id_seq
 ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3519 (class 0 OID 0)
+-- TOC entry 3516 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -253,7 +253,7 @@ CREATE SEQUENCE public.auth_user_user_permissions_id_seq
 ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3520 (class 0 OID 0)
+-- TOC entry 3517 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -312,7 +312,7 @@ CREATE SEQUENCE public.django_admin_log_id_seq
 ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3521 (class 0 OID 0)
+-- TOC entry 3518 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -351,7 +351,7 @@ CREATE SEQUENCE public.django_content_type_id_seq
 ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3522 (class 0 OID 0)
+-- TOC entry 3519 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -390,7 +390,7 @@ CREATE SEQUENCE public.django_migrations_id_seq
 ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3523 (class 0 OID 0)
+-- TOC entry 3520 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -441,7 +441,7 @@ CREATE SEQUENCE public.receipt_category_id_seq
 ALTER TABLE public.receipt_category_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3524 (class 0 OID 0)
+-- TOC entry 3521 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: receipt_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -479,7 +479,7 @@ CREATE SEQUENCE public.receipt_category_user_id_seq
 ALTER TABLE public.receipt_category_user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3525 (class 0 OID 0)
+-- TOC entry 3522 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: receipt_category_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -519,7 +519,7 @@ CREATE SEQUENCE public.receipt_item_id_seq
 ALTER TABLE public.receipt_item_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3526 (class 0 OID 0)
+-- TOC entry 3523 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: receipt_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -558,7 +558,7 @@ CREATE SEQUENCE public.receipt_receipt_id_seq
 ALTER TABLE public.receipt_receipt_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3527 (class 0 OID 0)
+-- TOC entry 3524 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: receipt_receipt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -595,7 +595,7 @@ CREATE SEQUENCE public.receipt_shop_id_seq
 ALTER TABLE public.receipt_shop_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3528 (class 0 OID 0)
+-- TOC entry 3525 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: receipt_shop_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -716,7 +716,7 @@ ALTER TABLE ONLY public.receipt_shop ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- TOC entry 3487 (class 0 OID 16674)
+-- TOC entry 3484 (class 0 OID 16674)
 -- Dependencies: 216
 -- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -726,7 +726,7 @@ COPY public.auth_group (id, name) FROM stdin;
 
 
 --
--- TOC entry 3489 (class 0 OID 16683)
+-- TOC entry 3486 (class 0 OID 16683)
 -- Dependencies: 218
 -- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -736,7 +736,7 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 
 
 --
--- TOC entry 3485 (class 0 OID 16667)
+-- TOC entry 3482 (class 0 OID 16667)
 -- Dependencies: 214
 -- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -794,20 +794,20 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 
 
 --
--- TOC entry 3491 (class 0 OID 16690)
+-- TOC entry 3488 (class 0 OID 16690)
 -- Dependencies: 220
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$320000$Edf1Ab04IkTNlZJ7yOgfRb$Dt28tzj3BCtNmrOfLyYriRqMpNS6e5tvY2BOUEXTx6A=	\N	t	admin				t	t	2022-05-12 04:41:13.713264+02
 2	pbkdf2_sha256$320000$tzNka8csKMVey9MMTOdlA2$y6jAIQLblC0+vDUSVnfFvBk5vTji27mqiSFCkN5FnzA=	\N	f	jan			jan@jan.pl	f	t	2022-05-14 04:44:17.753631+02
 5	pbkdf2_sha256$320000$vSpFLGgr3PEM7JVZlIVCXP$7Cj8QmSIzoayGIx77Gl4aojFjPEOBTed8A6S5bXy++A=	\N	f	jan1			jan@jan.pl	f	t	2022-05-14 04:56:12.052519+02
+1	pbkdf2_sha256$320000$Edf1Ab04IkTNlZJ7yOgfRb$Dt28tzj3BCtNmrOfLyYriRqMpNS6e5tvY2BOUEXTx6A=	2022-05-17 04:05:47.21463+02	t	admin				t	t	2022-05-12 04:41:13.713264+02
 \.
 
 
 --
--- TOC entry 3493 (class 0 OID 16699)
+-- TOC entry 3490 (class 0 OID 16699)
 -- Dependencies: 222
 -- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -817,7 +817,7 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 
 
 --
--- TOC entry 3495 (class 0 OID 16706)
+-- TOC entry 3492 (class 0 OID 16706)
 -- Dependencies: 224
 -- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -827,18 +827,19 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
--- TOC entry 3509 (class 0 OID 18064)
+-- TOC entry 3506 (class 0 OID 18064)
 -- Dependencies: 238
 -- Data for Name: authtoken_token; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.authtoken_token (key, created, user_id) FROM stdin;
-891058ca9deb1ff31034451e7c3a98404a1e93e2	2022-05-14 21:39:08.262879+02	5
+1	2022-05-16 03:55:43.468+02	2
+2	2022-05-14 21:39:08.262879+02	5
 \.
 
 
 --
--- TOC entry 3497 (class 0 OID 16765)
+-- TOC entry 3494 (class 0 OID 16765)
 -- Dependencies: 226
 -- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -848,7 +849,7 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 
 
 --
--- TOC entry 3483 (class 0 OID 16658)
+-- TOC entry 3480 (class 0 OID 16658)
 -- Dependencies: 212
 -- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -870,7 +871,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 
 
 --
--- TOC entry 3481 (class 0 OID 16649)
+-- TOC entry 3478 (class 0 OID 16649)
 -- Dependencies: 210
 -- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -898,21 +899,23 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 20	authtoken	0001_initial	2022-05-14 04:51:09.905784+02
 21	authtoken	0002_auto_20160226_1747	2022-05-14 04:51:09.937035+02
 22	authtoken	0003_tokenproxy	2022-05-14 04:51:09.937035+02
+23	receipt	0002_alter_category_name_alter_item_receipt	2022-05-17 05:21:57.715579+02
 \.
 
 
 --
--- TOC entry 3498 (class 0 OID 16794)
+-- TOC entry 3495 (class 0 OID 16794)
 -- Dependencies: 227
 -- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+nsjlk49r2rxxt1wzsy3xy7zug7yiu2iz	.eJxVjEEOwiAQRe_C2hAqDIhL956hGWYGqRpISrsy3l2bdKHb_977LzXiupRx7TKPE6uzGtThd0tID6kb4DvWW9PU6jJPSW-K3mnX18byvOzu30HBXr51xGCyFQLD5BNHOAIg5MCOyfqYYiA-OfBknSSwZgiGIXPIRhzHCOr9AfJpOBo:1nqmap:wox_guP389DOHzpSmloGhfuZTOyJE3YVBByn6VtI1cs	2022-05-31 04:05:47.21463+02
 \.
 
 
 --
--- TOC entry 3500 (class 0 OID 17988)
+-- TOC entry 3497 (class 0 OID 17988)
 -- Dependencies: 229
 -- Data for Name: receipt_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -923,11 +926,14 @@ COPY public.receipt_category (id, name) FROM stdin;
 3	sprzęt it
 4	meble
 5	papierosy
+6	kremy
+9	kremy2
+10	kremy3
 \.
 
 
 --
--- TOC entry 3502 (class 0 OID 17997)
+-- TOC entry 3499 (class 0 OID 17997)
 -- Dependencies: 231
 -- Data for Name: receipt_category_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -941,11 +947,16 @@ COPY public.receipt_category_user (id, category_id, user_id) FROM stdin;
 6	1	2
 7	2	2
 8	4	2
+10	6	2
+13	9	2
+14	9	5
+16	10	5
+18	10	2
 \.
 
 
 --
--- TOC entry 3508 (class 0 OID 18018)
+-- TOC entry 3505 (class 0 OID 18018)
 -- Dependencies: 237
 -- Data for Name: receipt_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -954,11 +965,19 @@ COPY public.receipt_item (id, name, price, category_id, receipt_id) FROM stdin;
 1	bułki	1.79	2	1
 2	laptop	12342.20	3	1
 3	lustro	12.00	1	3
+14	chleb	11.11	5	34
+15	laptopp	13.13	1	34
+16	chleb	11.11	4	36
+17	laptopp	13.13	1	36
+19	chleb1	11.44	1	39
+20	laptopp1	13.44	4	39
+21	chleb1	11.44	1	40
+22	laptopp1	13.44	4	40
 \.
 
 
 --
--- TOC entry 3506 (class 0 OID 18011)
+-- TOC entry 3503 (class 0 OID 18011)
 -- Dependencies: 235
 -- Data for Name: receipt_receipt; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -967,11 +986,18 @@ COPY public.receipt_receipt (id, date, shop_id, user_id) FROM stdin;
 1	2022-05-09	6	5
 2	2022-05-11	88	5
 3	2022-05-10	142	2
+34	2022-05-11	21	2
+35	2022-05-11	21	2
+36	2022-05-11	21	2
+37	2022-05-11	21	2
+38	2022-05-11	21	2
+39	2022-05-11	21	2
+40	2022-05-11	21	2
 \.
 
 
 --
--- TOC entry 3504 (class 0 OID 18004)
+-- TOC entry 3501 (class 0 OID 18004)
 -- Dependencies: 233
 -- Data for Name: receipt_shop; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1326,7 +1352,7 @@ COPY public.receipt_shop (id, name) FROM stdin;
 
 
 --
--- TOC entry 3529 (class 0 OID 0)
+-- TOC entry 3526 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1335,7 +1361,7 @@ SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- TOC entry 3530 (class 0 OID 0)
+-- TOC entry 3527 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1344,7 +1370,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
--- TOC entry 3531 (class 0 OID 0)
+-- TOC entry 3528 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1353,7 +1379,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
 
 
 --
--- TOC entry 3532 (class 0 OID 0)
+-- TOC entry 3529 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1362,7 +1388,7 @@ SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 
 
 --
--- TOC entry 3533 (class 0 OID 0)
+-- TOC entry 3530 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1371,7 +1397,7 @@ SELECT pg_catalog.setval('public.auth_user_id_seq', 5, true);
 
 
 --
--- TOC entry 3534 (class 0 OID 0)
+-- TOC entry 3531 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1380,7 +1406,7 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
--- TOC entry 3535 (class 0 OID 0)
+-- TOC entry 3532 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1389,7 +1415,7 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 
 
 --
--- TOC entry 3536 (class 0 OID 0)
+-- TOC entry 3533 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1398,52 +1424,52 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 
 
 --
--- TOC entry 3537 (class 0 OID 0)
+-- TOC entry 3534 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 22, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 23, true);
 
 
 --
--- TOC entry 3538 (class 0 OID 0)
+-- TOC entry 3535 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: receipt_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.receipt_category_id_seq', 5, true);
+SELECT pg_catalog.setval('public.receipt_category_id_seq', 10, true);
 
 
 --
--- TOC entry 3539 (class 0 OID 0)
+-- TOC entry 3536 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: receipt_category_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.receipt_category_user_id_seq', 8, true);
+SELECT pg_catalog.setval('public.receipt_category_user_id_seq', 18, true);
 
 
 --
--- TOC entry 3540 (class 0 OID 0)
+-- TOC entry 3537 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: receipt_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.receipt_item_id_seq', 3, true);
+SELECT pg_catalog.setval('public.receipt_item_id_seq', 22, true);
 
 
 --
--- TOC entry 3541 (class 0 OID 0)
+-- TOC entry 3538 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: receipt_receipt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.receipt_receipt_id_seq', 3, true);
+SELECT pg_catalog.setval('public.receipt_receipt_id_seq', 40, true);
 
 
 --
--- TOC entry 3542 (class 0 OID 0)
+-- TOC entry 3539 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: receipt_shop_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1560,7 +1586,7 @@ ALTER TABLE ONLY public.auth_user
 
 
 --
--- TOC entry 3322 (class 2606 OID 18068)
+-- TOC entry 3319 (class 2606 OID 18068)
 -- Name: authtoken_token authtoken_token_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1569,7 +1595,7 @@ ALTER TABLE ONLY public.authtoken_token
 
 
 --
--- TOC entry 3324 (class 2606 OID 18070)
+-- TOC entry 3321 (class 2606 OID 18070)
 -- Name: authtoken_token authtoken_token_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1623,16 +1649,7 @@ ALTER TABLE ONLY public.django_session
 
 
 --
--- TOC entry 3301 (class 2606 OID 17995)
--- Name: receipt_category receipt_category_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.receipt_category
-    ADD CONSTRAINT receipt_category_name_key UNIQUE (name);
-
-
---
--- TOC entry 3303 (class 2606 OID 17993)
+-- TOC entry 3300 (class 2606 OID 17993)
 -- Name: receipt_category receipt_category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1641,7 +1658,7 @@ ALTER TABLE ONLY public.receipt_category
 
 
 --
--- TOC entry 3306 (class 2606 OID 18026)
+-- TOC entry 3303 (class 2606 OID 18026)
 -- Name: receipt_category_user receipt_category_user_category_id_user_id_7aecc743_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1650,7 +1667,7 @@ ALTER TABLE ONLY public.receipt_category_user
 
 
 --
--- TOC entry 3308 (class 2606 OID 18002)
+-- TOC entry 3305 (class 2606 OID 18002)
 -- Name: receipt_category_user receipt_category_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1659,7 +1676,7 @@ ALTER TABLE ONLY public.receipt_category_user
 
 
 --
--- TOC entry 3318 (class 2606 OID 18023)
+-- TOC entry 3315 (class 2606 OID 18023)
 -- Name: receipt_item receipt_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1668,7 +1685,7 @@ ALTER TABLE ONLY public.receipt_item
 
 
 --
--- TOC entry 3313 (class 2606 OID 18016)
+-- TOC entry 3310 (class 2606 OID 18016)
 -- Name: receipt_receipt receipt_receipt_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1677,7 +1694,7 @@ ALTER TABLE ONLY public.receipt_receipt
 
 
 --
--- TOC entry 3311 (class 2606 OID 18009)
+-- TOC entry 3308 (class 2606 OID 18009)
 -- Name: receipt_shop receipt_shop_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1758,7 +1775,7 @@ CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (u
 
 
 --
--- TOC entry 3320 (class 1259 OID 18076)
+-- TOC entry 3317 (class 1259 OID 18076)
 -- Name: authtoken_token_key_10f0b77e_like; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1798,15 +1815,7 @@ CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session U
 
 
 --
--- TOC entry 3299 (class 1259 OID 18024)
--- Name: receipt_category_name_d0415aa0_like; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX receipt_category_name_d0415aa0_like ON public.receipt_category USING btree (name varchar_pattern_ops);
-
-
---
--- TOC entry 3304 (class 1259 OID 18037)
+-- TOC entry 3301 (class 1259 OID 18037)
 -- Name: receipt_category_user_category_id_3c624a20; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1814,7 +1823,7 @@ CREATE INDEX receipt_category_user_category_id_3c624a20 ON public.receipt_catego
 
 
 --
--- TOC entry 3309 (class 1259 OID 18038)
+-- TOC entry 3306 (class 1259 OID 18038)
 -- Name: receipt_category_user_user_id_77ef6eb0; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1822,7 +1831,7 @@ CREATE INDEX receipt_category_user_user_id_77ef6eb0 ON public.receipt_category_u
 
 
 --
--- TOC entry 3316 (class 1259 OID 18061)
+-- TOC entry 3313 (class 1259 OID 18061)
 -- Name: receipt_item_category_id_8a4f6aa3; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1830,7 +1839,7 @@ CREATE INDEX receipt_item_category_id_8a4f6aa3 ON public.receipt_item USING btre
 
 
 --
--- TOC entry 3319 (class 1259 OID 18062)
+-- TOC entry 3316 (class 1259 OID 18062)
 -- Name: receipt_item_receipt_id_9e3566c9; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1838,7 +1847,7 @@ CREATE INDEX receipt_item_receipt_id_9e3566c9 ON public.receipt_item USING btree
 
 
 --
--- TOC entry 3314 (class 1259 OID 18049)
+-- TOC entry 3311 (class 1259 OID 18049)
 -- Name: receipt_receipt_shop_id_7e3cc9ab; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1846,7 +1855,7 @@ CREATE INDEX receipt_receipt_shop_id_7e3cc9ab ON public.receipt_receipt USING bt
 
 
 --
--- TOC entry 3315 (class 1259 OID 18050)
+-- TOC entry 3312 (class 1259 OID 18050)
 -- Name: receipt_receipt_user_id_1eff22df; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1854,7 +1863,7 @@ CREATE INDEX receipt_receipt_user_id_1eff22df ON public.receipt_receipt USING bt
 
 
 --
--- TOC entry 3327 (class 2606 OID 16728)
+-- TOC entry 3324 (class 2606 OID 16728)
 -- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1863,7 +1872,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- TOC entry 3326 (class 2606 OID 16723)
+-- TOC entry 3323 (class 2606 OID 16723)
 -- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1872,7 +1881,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- TOC entry 3325 (class 2606 OID 16714)
+-- TOC entry 3322 (class 2606 OID 16714)
 -- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1881,7 +1890,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- TOC entry 3329 (class 2606 OID 16743)
+-- TOC entry 3326 (class 2606 OID 16743)
 -- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1890,7 +1899,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- TOC entry 3328 (class 2606 OID 16738)
+-- TOC entry 3325 (class 2606 OID 16738)
 -- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1899,7 +1908,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- TOC entry 3331 (class 2606 OID 16757)
+-- TOC entry 3328 (class 2606 OID 16757)
 -- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1908,7 +1917,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- TOC entry 3330 (class 2606 OID 16752)
+-- TOC entry 3327 (class 2606 OID 16752)
 -- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1917,7 +1926,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- TOC entry 3340 (class 2606 OID 18071)
+-- TOC entry 3337 (class 2606 OID 18071)
 -- Name: authtoken_token authtoken_token_user_id_35299eff_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1926,7 +1935,7 @@ ALTER TABLE ONLY public.authtoken_token
 
 
 --
--- TOC entry 3332 (class 2606 OID 16774)
+-- TOC entry 3329 (class 2606 OID 16774)
 -- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1935,7 +1944,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- TOC entry 3333 (class 2606 OID 16779)
+-- TOC entry 3330 (class 2606 OID 16779)
 -- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1944,7 +1953,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- TOC entry 3334 (class 2606 OID 18027)
+-- TOC entry 3331 (class 2606 OID 18027)
 -- Name: receipt_category_user receipt_category_use_category_id_3c624a20_fk_receipt_c; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1953,7 +1962,7 @@ ALTER TABLE ONLY public.receipt_category_user
 
 
 --
--- TOC entry 3335 (class 2606 OID 18032)
+-- TOC entry 3332 (class 2606 OID 18032)
 -- Name: receipt_category_user receipt_category_user_user_id_77ef6eb0_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1962,7 +1971,7 @@ ALTER TABLE ONLY public.receipt_category_user
 
 
 --
--- TOC entry 3338 (class 2606 OID 18051)
+-- TOC entry 3335 (class 2606 OID 18051)
 -- Name: receipt_item receipt_item_category_id_8a4f6aa3_fk_receipt_category_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1971,7 +1980,7 @@ ALTER TABLE ONLY public.receipt_item
 
 
 --
--- TOC entry 3339 (class 2606 OID 18056)
+-- TOC entry 3336 (class 2606 OID 18056)
 -- Name: receipt_item receipt_item_receipt_id_9e3566c9_fk_receipt_receipt_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1980,7 +1989,7 @@ ALTER TABLE ONLY public.receipt_item
 
 
 --
--- TOC entry 3336 (class 2606 OID 18039)
+-- TOC entry 3333 (class 2606 OID 18039)
 -- Name: receipt_receipt receipt_receipt_shop_id_7e3cc9ab_fk_receipt_shop_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1989,7 +1998,7 @@ ALTER TABLE ONLY public.receipt_receipt
 
 
 --
--- TOC entry 3337 (class 2606 OID 18044)
+-- TOC entry 3334 (class 2606 OID 18044)
 -- Name: receipt_receipt receipt_receipt_user_id_1eff22df_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1997,7 +2006,7 @@ ALTER TABLE ONLY public.receipt_receipt
     ADD CONSTRAINT receipt_receipt_user_id_1eff22df_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
--- Completed on 2022-05-15 23:19:15
+-- Completed on 2022-05-17 20:11:57
 
 --
 -- PostgreSQL database dump complete
