@@ -52,6 +52,19 @@ class ItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = ['id', 'name', 'price', 'category']
 
+    def create(self, validated_data, *args, **kwargs):
+        user = self.context.get('user')
+        receipt_id = self.context.get('receipt_id')
+        category_name = validated_data.pop('category')
+        try:
+            receipt = Receipt.objects.get(user=user, id=receipt_id)
+            category = Category.objects.get(user=user, name=category_name['name'])
+            item = Item.objects.create(**validated_data, receipt=receipt, category=category)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError()
+
+        return item
+
 
 class ReceiptSerializer(serializers.ModelSerializer):
     items = ItemSerializer(many=True, read_only=False)
