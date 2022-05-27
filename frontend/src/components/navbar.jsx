@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Header, Container, Button, createStyles } from '@mantine/core'
 
 import { Receipt } from 'tabler-icons-react'
+import { Outlet } from 'react-router-dom'
 
 const HEADER_HEIGHT = 60
 
@@ -14,18 +15,21 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export default function HeaderAction() {
+export default function Navbar() {
 	const { classes } = useStyles()
 
 	return (
-		<Header>
-			<Container className={classes.inner} fluid>
-				<Receipt size={48} strokeWidth={2} color={'#65bf40'} />
+		<Fragment>
+			<Header>
+				<Container className={classes.inner} fluid>
+					<Receipt size={48} strokeWidth={2} color={'#65bf40'} />
 
-				<Button radius="xl" sx={{ height: 30 }}>
-					Get early access
-				</Button>
-			</Container>
-		</Header>
+					<Button radius="xl" sx={{ height: 30 }}>
+						Get early access
+					</Button>
+				</Container>
+			</Header>
+			<Outlet />
+		</Fragment>
 	)
 }

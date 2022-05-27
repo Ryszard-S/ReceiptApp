@@ -1,3 +1,4 @@
+import React from 'react'
 import { useForm, useToggle, upperFirst } from '@mantine/hooks'
 import {
 	TextInput,
@@ -10,7 +11,9 @@ import {
 	Checkbox,
 	Anchor,
 } from '@mantine/core'
-export default function Login(props) {
+import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons'
+
+export function AuthenticationForm(props) {
 	const [type, toggle] = useToggle('login', ['login', 'register'])
 	const form = useForm({
 		initialValues: {
@@ -31,6 +34,11 @@ export default function Login(props) {
 			<Text size="lg" weight={500}>
 				Welcome to Mantine, {type} with
 			</Text>
+
+			<Group grow mb="md" mt="md">
+				<GoogleButton radius="xl">Google</GoogleButton>
+				<TwitterButton radius="xl">Twitter</TwitterButton>
+			</Group>
 
 			<Divider label="Or continue with email" labelPosition="center" my="lg" />
 
