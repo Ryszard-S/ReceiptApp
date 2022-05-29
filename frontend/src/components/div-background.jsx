@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { Header, Container, Button, createStyles } from '@mantine/core'
-
 import { Receipt } from 'tabler-icons-react'
 import { Outlet } from 'react-router-dom'
 
@@ -8,7 +7,7 @@ const HEADER_HEIGHT = 60
 
 const useStyles = createStyles((theme) => ({
 	inner: {
-		height: HEADER_HEIGHT,
+		height: `calc(100vh-${HEADER_HEIGHT}px`,
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
