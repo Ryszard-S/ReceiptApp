@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { Header, Container, Button, createStyles } from '@mantine/core'
-
 import { Receipt } from 'tabler-icons-react'
 import { Outlet } from 'react-router-dom'
 

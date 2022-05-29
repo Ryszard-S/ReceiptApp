@@ -9,6 +9,7 @@ import {
 	Container,
 } from '@mantine/core'
 import { Link } from 'react-router-dom'
+import DivImageBackground from '../components/div-background'
 
 export function Login(props) {
 	const form = useForm({
@@ -26,43 +27,47 @@ export function Login(props) {
 	})
 
 	return (
-		<Container>
-		<Paper radius="md" p="xl" withBorder {...props}>
-			<form onSubmit={form.onSubmit(() => {})}>
-				<Group direction="column" grow>
-					<TextInput
-						required
-						label="Email"
-						placeholder="hello@mantine.dev"
-						value={form.values.email}
-						onChange={(event) =>
-							form.setFieldValue('email', event.currentTarget.value)
-						}
-						error={form.errors.email && 'Invalid email'}
-					/>
+		<DivImageBackground>
+			<Container>
+				<Paper radius="md" p="xl" withBorder {...props}>
+					<form onSubmit={form.onSubmit(() => {})}>
+						<Group direction="column" grow>
+							<TextInput
+								required
+								label="Email"
+								placeholder="hello@mantine.dev"
+								value={form.values.email}
+								onChange={(event) =>
+									form.setFieldValue('email', event.currentTarget.value)
+								}
+								error={form.errors.email && 'Invalid email'}
+							/>
 
-					<PasswordInput
-						required
-						label="Password"
-						placeholder="Your password"
-						value={form.values.password}
-						onChange={(event) =>
-							form.setFieldValue('password', event.currentTarget.value)
-						}
-						error={
-							form.errors.password &&
-							'Password should include at least 6 characters'
-						}
-					/>
-				</Group>
+							<PasswordInput
+								required
+								label="Password"
+								placeholder="Your password"
+								value={form.values.password}
+								onChange={(event) =>
+									form.setFieldValue('password', event.currentTarget.value)
+								}
+								error={
+									form.errors.password &&
+									'Password should include at least 6 characters'
+								}
+							/>
+						</Group>
 
-				<Group position="apart" mt="xl">
-					
-					<Anchor	component={Link} to={'/register '} size='xs'> Don't have an account? Register </Anchor>
-					<Button type="submit">Login</Button>
-				</Group>
-			</form>
-		</Paper>
-		</Container>
+						<Group position="apart" mt="xl">
+							<Anchor component={Link} to={'/register '} size="xs">
+								{' '}
+								Don't have an account? Register{' '}
+							</Anchor>
+							<Button type="submit">Login</Button>
+						</Group>
+					</form>
+				</Paper>
+			</Container>
+		</DivImageBackground>
 	)
 }
