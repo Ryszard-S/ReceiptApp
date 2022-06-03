@@ -1,60 +1,61 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { createContext, useState } from 'react'
 
-let logoutTimer
+const AuthContext = createContext()
 
-const AuthContext = React.createContext({
-	token: '',
-	isLoggedIn: false,
-	login: (token) => {}
-})
+export default AuthContext
 
-const retrieveStoredToken = () => {
-	const storedToken = localStorage.getItem('token')
+export const AuthProvider = ({ children }) => {
+	let [authTokens, setAuthTokens] = useState(() =>
+		localStorage.getItem('authTokens')
+			? JSON.parse(localStorage.getItem('authTokens'))
+			: null
+	)
+	// let [loading, setLoading] = useState(true)
 
-	return {
-		token: storedToken,
-	}
-}
+	let loginUser = async (e) => {
+		let response = await fetch('http://localhost:8000/authorization/login/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				username: e.username,
+				password: e.password,
+			}),
+		})
+		let data = await response.json()
 
-export const AuthContextProvider = (props) => {
-	const tokenData = retrieveStoredToken()
-
-	let initialToken
-	if (tokenData) {
-		initialToken = tokenData.token
-	}
-
-	const [token, setToken] = useState(initialToken)
-
-	const userIsLoggedIn = !!token
-
-	const logoutHandler = useCallback(() => {
-		setToken(null)
-		localStorage.removeItem('token')
-	}, [])
-
-	const loginHandler = (token) => {
-		setToken(token)
-		localStorage.setItem('token', token)
-	}
-
-	useEffect(() => {
-		if (tokenData) {
-			console.log(tokenData)
+		if (response.status === 200) {
+			setAuthTokens(data)
+			localStorage.setItem('authTokens', JSON.stringify(data))
+		} else {
+			alert('Something went wrong!')
 		}
-	}, [tokenData])
-
-	const contextValue = {
-		token: token,
-		isLoggedIn: userIsLoggedIn,
-		login: loginHandler
 	}
+
+	let logoutUser = () => {
+		setAuthTokens(null)
+		localStorage.removeItem('authTokens')
+	}
+
+	let contextData = {
+		authTokens: authTokens,
+		setAuthTokens: setAuthTokens,
+		loginUser: loginUser,
+		logoutUser: logoutUser,
+	}
+
+	// useEffect(() => {
+	// 	if (authTokens) {
+	// 		setUser(authTokens)
+	// 	}
+	// 	setLoading(false)
+	// }, [authTokens, loading])
 
 	return (
-		<AuthContext.Provider value={contextValue}>
-			{props.children}
+		<AuthContext.Provider value={contextData}>
+			{/* {loading ? null : */}
+			{children}
 		</AuthContext.Provider>
 	)
 }
-
-export default AuthContext

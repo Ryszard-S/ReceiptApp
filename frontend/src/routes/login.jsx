@@ -8,43 +8,52 @@ import {
 	Anchor,
 	Container,
 } from '@mantine/core'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import DivImageBackground from '../components/div-background'
+import { useContext, useEffect } from 'react'
+import AuthContext from '../contexts/AuthContext'
 
 export function Login(props) {
+	let { loginUser, authTokens } = useContext(AuthContext)
+	const navigate = useNavigate()
 	const form = useForm({
 		initialValues: {
-			email: '',
-			name: '',
+			username: '',
 			password: '',
-			terms: true,
 		},
 
 		validationRules: {
-			email: (val) => /^\S+@\S+$/.test(val),
+			username: (val) => val.length >= 6,
 			password: (val) => val.length >= 6,
 		},
+	})
+
+	useEffect(() => {
+		if (authTokens) {
+			navigate('/jr', { replace: true })
+		}
 	})
 
 	return (
 		<DivImageBackground>
 			<Container>
 				<Paper radius="md" p="xl" withBorder {...props}>
-					<form onSubmit={form.onSubmit(() => {})}>
+					<form onSubmit={form.onSubmit(loginUser)}>
 						<Group direction="column" grow>
 							<TextInput
 								required
-								label="Email"
-								placeholder="hello@mantine.dev"
-								value={form.values.email}
+								name="username"
+								label="Username"
+								value={form.values.username}
 								onChange={(event) =>
-									form.setFieldValue('email', event.currentTarget.value)
+									form.setFieldValue('username', event.currentTarget.value)
 								}
-								error={form.errors.email && 'Invalid email'}
+								error={form.errors.username && 'Invalid username'}
 							/>
 
 							<PasswordInput
 								required
+								name="password"
 								label="Password"
 								placeholder="Your password"
 								value={form.values.password}
@@ -60,8 +69,7 @@ export function Login(props) {
 
 						<Group position="apart" mt="xl">
 							<Anchor component={Link} to={'/register '} size="xs">
-								{' '}
-								Don't have an account? Register{' '}
+								Don't have an account? Register
 							</Anchor>
 							<Button type="submit">Login</Button>
 						</Group>
