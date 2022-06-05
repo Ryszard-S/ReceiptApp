@@ -8,19 +8,19 @@ import PrivateRoute from './routes/private-route/PrivateRoute'
 import { Register } from './routes/register'
 
 function App() {
-	return (
-		<Fragment>
-			<Navbar />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
-				<Route element={<PrivateRoute />}>
-					<Route path={'/jr'} element={<Jr />} />
-				</Route>
-			</Routes>
-		</Fragment>
-	)
+  return (
+    <Fragment>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route element={<PrivateRoute />}>
+          <Route path={'/jr/*'} element={<Jr />} />
+        </Route>
+      </Routes>
+    </Fragment>
+  )
 }
 
 export default App
