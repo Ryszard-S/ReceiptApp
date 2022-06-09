@@ -35,6 +35,8 @@ function Receipts() {
   const [itemCategory, setItemCategory] = useState('')
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
+  const [date, setDate] = useState()
+
   useEffect(
     () => async () => {
       const res = await axiosPrivateInstance.get('/')
@@ -44,8 +46,33 @@ function Receipts() {
     },
     []
   )
+
+  const submitReceipt = async (e) => {
+    e.preventDefault()
+    const items = currentItemsList.map((item) => ({
+      name: item.name,
+      price: item.price,
+      category: {name: item.category}}))
+    try {
+      const res = await axiosPrivateInstance.post('receipts/create/', {
+        shop:{name: currentShop},
+        date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+        items: items,
+      })
+      console.log(res)
+      
+    } catch(error){
+      console.log(error)
+    }
+
+    console.log(items)
+  }
+
   const addNewItem = () => {
     setCurrentItemsList([...currentItemsList, { name: itemName, price: itemPrice, category: itemCategory }])
+    setItemName('')
+    setItemCategory('')
+    setItemPrice(0)
   }
   const rows = currentItemsList.map((item, index) => (
     <tr key={index}>
@@ -69,13 +96,19 @@ function Receipts() {
     <Fragment>
       <form>
         <Autocomplete label="Shop name" placeholder="Pick one" data={shopList} onChange={setCurrentShop} />
-        <DatePicker placeholder="Pick date" label="Event date" />
+        <DatePicker placeholder="Pick date" label="Event date" onChange={setDate} mb={'xl'} />
         <Divider my="xs" label="Items" labelPosition="center" />
-        <TextInput label="Item name" placeholder="Item name" onChange={(e) => setItemName(e.target.value)} />
-        <NumberInput label="Number input with decimal steps" defaultValue={0.0} precision={2} step={0.01} onChange={(e) => setItemPrice(e)} />
-        <NativeSelect data={currentCategoriesList} placeholder="Pick one" label="Category" onChange={(e) => setItemCategory(e.target.value)} required />
-        <Button onClick={addNewItem}>Add item</Button>
-        <ScrollArea sx={{ height: 600 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
+        <TextInput label="Item name" placeholder="Item name" onChange={(e) => setItemName(e.target.value)} value={itemName} />
+        <NumberInput label="Price" precision={2} step={0.01} onChange={(e) => setItemPrice(e)} value={itemPrice} />
+        <NativeSelect data={currentCategoriesList} placeholder="Pick one" label="Category" onChange={(e) => setItemCategory(e.target.value)} value={itemCategory} required />
+        <Button
+          onClick={() => {
+            addNewItem()
+          }}
+        >
+          Add item
+        </Button>
+        <ScrollArea sx={{ height: 400 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
           <Table sx={{ minWidth: 700 }}>
             <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
               <tr>
@@ -88,6 +121,9 @@ function Receipts() {
             <tbody>{rows}</tbody>
           </Table>
         </ScrollArea>
+        <Button type="submit" onClick={(e) => submitReceipt(e)}>
+          Add Receipt
+        </Button>
       </form>
     </Fragment>
   )
