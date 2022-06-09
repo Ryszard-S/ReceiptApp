@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
-import { Button, createStyles, Navbar } from '@mantine/core'
-import { BellRinging, Key, Receipt2 } from 'tabler-icons-react'
-import { Outlet, Link } from 'react-router-dom'
+import { createStyles, Navbar } from '@mantine/core'
+import { List, Receipt2, ZoomMoney } from 'tabler-icons-react'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon')
@@ -46,33 +46,34 @@ const useStyles = createStyles((theme, _params, getRef) => {
 })
 
 const data = [
-  { link: 'expenses', label: 'Expenses', icon: BellRinging },
-  { link: 'categories', label: 'Categories', icon: Key },
-  { link: 'receips', label: 'Receipts', icon: Receipt2 }
+  { link: 'expenses', label: 'Expenses', icon: ZoomMoney },
+  { link: 'categories', label: 'Categories', icon: List },
+  { link: 'receipts', label: 'Receipts', icon: Receipt2 }
 ]
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
 export function Sidebar() {
   const { classes, cx } = useStyles()
-  const [active, setActive] = useState('Receipts')
+  const location = useLocation()
+  const x = location.pathname.split('/')
+  const currentLocation = capitalizeFirstLetter(x[x.length - 1])
+  const [active, setActive] = useState(currentLocation)
 
-  const links = data.map(
-    (item) => (
-      console.log(item.label, item.link),
-      (
-        <Link
-          className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-          to={item.link}
-          key={item.label}
-          onClick={(event) => {
-            setActive(item.label)
-          }}
-        >
-          <item.icon className={classes.linkIcon} />
-          <span>{item.label}</span>
-        </Link>
-      )
-    )
-  )
+  const links = data.map((item) => (
+    <Link
+      className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+      to={item.link}
+      key={item.label}
+      onClick={() => {
+        setActive(item.label)
+      }}
+    >
+      <item.icon className={classes.linkIcon} />
+      <span>{item.label}</span>
+    </Link>
+  ))
 
   return (
     <Fragment>

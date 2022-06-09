@@ -4,18 +4,20 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { AuthProvider } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
-
+import { NotificationsProvider } from '@mantine/notifications'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	<React.StrictMode>
-		<ThemeProvider>
-			<AuthProvider>
-				<BrowserRouter>
-					<App />
-				</BrowserRouter>
-			</AuthProvider>
-		</ThemeProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <ThemeProvider>
+      <NotificationsProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AuthProvider>
+      </NotificationsProvider>
+    </ThemeProvider>
+  </React.StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function
