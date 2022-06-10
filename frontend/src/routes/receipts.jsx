@@ -2,6 +2,7 @@ import { Autocomplete, Button, createStyles, Divider, NativeSelect, NumberInput,
 import React, { Fragment, useEffect, useState } from 'react'
 import axiosPrivateInstance from '../utils/axiosPrivateInstance'
 import { DatePicker } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -60,9 +61,11 @@ function Receipts() {
         items: items,
       })
       console.log(res)
+      showNotification({ message: 'Receipt added', color: 'green' })
       
     } catch(error){
       console.log(error)
+      showNotification({ message: 'Error', color: 'red' })
     }
 
     console.log(items)
@@ -97,7 +100,7 @@ function Receipts() {
       <form>
         <Autocomplete label="Shop name" placeholder="Pick one" data={shopList} onChange={setCurrentShop} />
         <DatePicker placeholder="Pick date" label="Event date" onChange={setDate} mb={'xl'} />
-        <Divider my="xs" label="Items" labelPosition="center" />
+        <Divider my="xs" label="Items" labelPosition="center" mt={'xl'} />
         <TextInput label="Item name" placeholder="Item name" onChange={(e) => setItemName(e.target.value)} value={itemName} />
         <NumberInput label="Price" precision={2} step={0.01} onChange={(e) => setItemPrice(e)} value={itemPrice} />
         <NativeSelect data={currentCategoriesList} placeholder="Pick one" label="Category" onChange={(e) => setItemCategory(e.target.value)} value={itemCategory} required />
