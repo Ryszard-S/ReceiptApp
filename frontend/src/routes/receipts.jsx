@@ -42,8 +42,10 @@ function Receipts() {
     () => async () => {
       const res = await axiosPrivateInstance.get('/')
       setShopList(() => res.data.map((shop) => shop.name))
+
       const cat = await axiosPrivateInstance.get('/receipts/category')
       setCurrentCategoriesList(() => cat.data.map((c) => c.name))
+      console.log('shopList', shopList)
     },
     []
   )
@@ -53,17 +55,17 @@ function Receipts() {
     const items = currentItemsList.map((item) => ({
       name: item.name,
       price: item.price,
-      category: {name: item.category}}))
+      category: { name: item.category }
+    }))
     try {
       const res = await axiosPrivateInstance.post('receipts/create/', {
-        shop:{name: currentShop},
+        shop: { name: currentShop },
         date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-        items: items,
+        items: items
       })
       console.log(res)
       showNotification({ message: 'Receipt added', color: 'green' })
-      
-    } catch(error){
+    } catch (error) {
       console.log(error)
       showNotification({ message: 'Error', color: 'red' })
     }
