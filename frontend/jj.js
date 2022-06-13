@@ -107,14 +107,6 @@ categries.forEach((category) => {
 })
 console.log(y)
 
-// x = categries.map((category) => {
-//   receipts.map((receipt) => {
-//     console.log(receipt.items.filter((item) => item.category.id === category.id))
-//     receipt.items.filter((item) => item.category.id === category.id)
-//   })
-// })
-// console.log(x)
-
 //sum of all items in category
 receipts.forEach((receipt) => {
   receipt.items.forEach((item) => {
@@ -126,3 +118,22 @@ receipts.forEach((receipt) => {
   })
 })
 console.log(y)
+
+let z = (rec, cat) => {
+  let y = []
+  cat.forEach((category) => {
+    y.push({ name: category.name, sum: 0 })
+  })
+  rec.forEach((receipt) => {
+    receipt.items.forEach((item) => {
+      y.forEach((category) => {
+        if (item.category.name === category.name) {
+          category.sum += +item.price
+        }
+      })
+    })
+  })
+  return y
+}
+
+console.log('z', z(receipts, categries))
