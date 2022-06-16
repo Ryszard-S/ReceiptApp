@@ -105,7 +105,7 @@ let y = []
 categries.forEach((category) => {
   y.push({ name: category.name, sum: 0 })
 })
-console.log(y)
+// console.log(y)
 
 //sum of all items in category
 receipts.forEach((receipt) => {
@@ -117,7 +117,7 @@ receipts.forEach((receipt) => {
     })
   })
 })
-console.log(y)
+// console.log(y)
 
 let z = (rec, cat) => {
   let y = []
@@ -136,4 +136,13 @@ let z = (rec, cat) => {
   return y
 }
 
-console.log('z', z(receipts, categries))
+// console.log('z', z(receipts, categries))
+
+// Generate rgba random color for each category
+let colors = []
+categries.forEach((category) => {
+  colors.push(`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`)
+}
+)
+console.log(colors)
+
