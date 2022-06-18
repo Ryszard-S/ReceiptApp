@@ -3,6 +3,7 @@ import { Sidebar } from '../components/sidebar'
 import Expenses from './expenses'
 import Categories from './categories'
 import Receipts from './receipts'
+import Test from './test'
 
 function Jr() {
   return (
@@ -12,6 +13,7 @@ function Jr() {
         <Route path="/expenses" element={<Expenses />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/receipts" element={<Receipts />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </div>
   )

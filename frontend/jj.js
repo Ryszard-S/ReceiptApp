@@ -117,7 +117,7 @@ receipts.forEach((receipt) => {
     })
   })
 })
-// console.log(y)
+console.log(y)
 
 let z = (rec, cat) => {
   let y = []
@@ -149,3 +149,31 @@ const rndClr = () => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math
 
 const qwe = categries.map(() => rndClr())
 console.log(qwe)
+
+let arr = ['Ala', 'Maciek', 34, 'Tadek', 'Mbrcia', 'Marcia', 1.32]
+console.log(arr.sort())
+
+const arr3 = [
+  { name: 'new', sum: 875.97 },
+  { name: 'newcategory', sum: 123 },
+  { name: 'a;q', sum: 234.23 },
+  { name: 'or not !', sum: 1468.35 }
+]
+
+// sort arr3 by sum
+arr3.sort((a, b) => a.sum - b.sum)
+console.log(arr3)
+// sort arr3 by name
+arr3.sort((a, b) => a.name.localeCompare(b.name))
+console.log(arr3)
+
+// sort arr3 by name or sum
+arr3.sort((a, b) => {
+  if (a.name === b.name) {
+    return a.sum - b.sum
+  } else {
+    return a.name.localeCompare(b.name)
+  }
+}
+)
+console.log(arr3)

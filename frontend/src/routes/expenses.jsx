@@ -3,8 +3,7 @@ import { useEffect } from 'react'
 import axiosPrivateInstance from '../utils/axiosPrivateInstance'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
-import { createStyles } from '@mantine/core'
-
+import { createStyles, ScrollArea, Table } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -28,18 +27,11 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-
-
-
-
 function Expenses() {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
   const [receipts, setReceipts] = useState([])
   const [categories, setCategories] = useState([])
-
-
-
 
   let z = (rec, cat) => {
     let y = []
@@ -84,25 +76,27 @@ function Expenses() {
   }
 
   const rows = receipts.map((row, id) => (
-    <tr key={row.id}>
-      <td>{row.id}</td>
+    <tr key={id}>
+      <td>{id + 1}</td>
       <td>{row.name}</td>
+      <td>{row.sum}</td>
     </tr>
   ))
 
   return (
     <div>
-      {receipts.map((r) => (
-        <div key={r.name}>
-          <div>{r.name}</div>
-          <div>{r.sum}</div>
-          <br />
-        </div>
-      ))}
-      <p>From categories</p>
-      {categories.map((c) => (
-        <div>{c.name}</div>
-      ))}
+      <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
+        <Table sx={{ minWidth: 700 }}>
+          <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Sum</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </ScrollArea>
       <Pie data={data} />
     </div>
   )
