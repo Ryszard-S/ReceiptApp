@@ -142,7 +142,10 @@ let z = (rec, cat) => {
 let colors = []
 categries.forEach((category) => {
   colors.push(`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`)
-}
-)
+})
 console.log(colors)
 
+const rndClr = () => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+
+const qwe = categries.map(() => rndClr())
+console.log(qwe)
