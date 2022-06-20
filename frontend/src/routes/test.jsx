@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { createStyles, Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput } from '@mantine/core'
+import React, { Fragment, useState } from 'react'
+import { createStyles, Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, SimpleGrid, Burger } from '@mantine/core'
 import { Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react'
 
 const useStyles = createStyles((theme) => ({
@@ -23,12 +23,11 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-
 const data = [
   { name: 'new', sum: 875.97 },
   { name: 'newcategory', sum: 123.0 },
   { name: 'or not !', sum: 1468.35 },
-  { name: 'Butcha', sum: 123875.97 }
+  { name: 'butcha', sum: 123875.97 }
 ]
 
 function Th({ children, reversed, sorted, onSort }) {
@@ -95,6 +94,9 @@ function Test() {
   const [sortBy, setSortBy] = useState(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
 
+  const [opened, setOpened] = useState(false)
+  const title = opened ? 'Close navigation' : 'Open navigation'
+
   const setSorting = (field, isNumber) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
     setReverseSortDirection(reversed)
@@ -110,21 +112,40 @@ function Test() {
 
   const rows = sortedData.map((row, id) => (
     <tr key={row.name}>
-      <td>{id+1}</td>
+      <td>{id + 1}</td>
       <td>{row.name}</td>
       <td>{row.sum}</td>
     </tr>
   ))
 
   return (
-    <ScrollArea>
+    <SimpleGrid
+      cols={4}
+      spacing="lg"
+      breakpoints={[
+        { maxWidth: 'md', cols: 3, spacing: 'md' },
+        { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+        { maxWidth: 'xs', cols: 1, spacing: 'sm' }
+      ]}
+      style={{ border: '1px solid violet' }}
+    >
+      <Burger opened={opened} onClick={() => setOpened((o) => !o)} title={title} />
+      {opened && (
+        <Fragment>
+          <div style={{ border: '1px solid red' }}>1</div>
+          <div style={{ border: '1px solid red' }}>2</div>
+        </Fragment>
+      )}
+
+      <div style={{ border: '1px solid red' }}>3</div>
+      <div style={{ border: '1px solid red' }}>4</div>
+      <div style={{ border: '1px solid red' }}>5</div>
+      {/* <ScrollArea>
       <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
-      <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed', minWidth: 700 }}>
+      <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' , minWidth: 700}}>
         <thead>
           <tr>
-            <th>
-              Id
-            </th>
+            <th>Id</th>
             <Th sorted={sortBy === 'name'} reversed={reverseSortDirection} onSort={() => setSorting('name')}>
               Name
             </Th>
@@ -147,7 +168,8 @@ function Test() {
           )}
         </tbody>
       </Table>
-    </ScrollArea>
+    </ScrollArea>  */}
+    </SimpleGrid>
   )
 }
 

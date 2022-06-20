@@ -8,7 +8,8 @@ const useStyles = createStyles((theme, _params, getRef) => {
   return {
     navbar: {
       backgroundColor: theme.colors[theme.primaryColor][6],
-      minHeight: 'calc(100vh - 61px)'
+      minHeight: 'calc(100vh - 61px)',
+      height: 'auto'
     },
 
     link: {

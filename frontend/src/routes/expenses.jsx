@@ -3,52 +3,114 @@ import { useEffect } from 'react'
 import axiosPrivateInstance from '../utils/axiosPrivateInstance'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
-import { createStyles, ScrollArea, Table } from '@mantine/core'
+import { createStyles, ScrollArea, Table, UnstyledButton, Group, Text, Center, TextInput, SimpleGrid } from '@mantine/core'
+import { Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react'
 
 const useStyles = createStyles((theme) => ({
-  header: {
-    position: 'sticky',
-    top: 0,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-    transition: 'box-shadow 150ms ease',
-
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      bottom: 0,
-      borderBottom: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2]}`
+  th: {
+    padding: '0 !important',
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
     }
   },
 
-  scrolled: {
-    boxShadow: theme.shadows.sm
+  control: {
+    width: '100%',
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
+    }
+  },
+
+  icon: {
+    width: 21,
+    height: 21,
+    borderRadius: 21
   }
 }))
 
-function Expenses() {
-  const { classes, cx } = useStyles()
-  const [scrolled, setScrolled] = useState(false)
-  const [receipts, setReceipts] = useState([])
-  const [categories, setCategories] = useState([])
+function Th({ children, reversed, sorted, onSort }) {
+  const { classes } = useStyles()
+  const Icon = sorted ? (reversed ? ChevronUp : ChevronDown) : Selector
+  return (
+    <th className={classes.th}>
+      <UnstyledButton onClick={onSort} className={classes.control}>
+        <Group position="apart">
+          <Text weight={500} size="sm">
+            {children}
+          </Text>
+          <Center className={classes.icon}>
+            <Icon size={14} />
+          </Center>
+        </Group>
+      </UnstyledButton>
+    </th>
+  )
+}
 
-  let z = (rec, cat) => {
-    let y = []
-    cat.forEach((category) => {
-      y.push({ name: category.name, sum: 0 })
-    })
-    rec.forEach((receipt) => {
-      receipt.items.forEach((item) => {
-        y.forEach((category) => {
-          if (item.category.name === category.name) {
-            category.sum += +item.price
-          }
-        })
+function filterData(data, search) {
+  const keys = ['name']
+  const query = search.toLowerCase().trim()
+  console.log(keys, query)
+  return data.filter((item) => keys.some((key) => item[key].toLowerCase().includes(query)))
+}
+
+function sortData(data, payload) {
+  console.log(payload)
+  console.log(payload.isNumber)
+  if (!payload.sortBy) {
+    console.log('no sortBy')
+    return filterData(data, payload.search)
+  }
+  if (payload.isNumber) {
+    console.log('wykonuje isNumber')
+    return filterData(
+      [...data].sort((a, b) => {
+        if (payload.reversed) {
+          return b[payload.sortBy] - a[payload.sortBy]
+        }
+
+        return a[payload.sortBy] - b[payload.sortBy]
+      }),
+      payload.search
+    )
+  }
+  console.log('wykonuje rest')
+  return filterData(
+    [...data].sort((a, b) => {
+      if (payload.reversed) {
+        return b[payload.sortBy].localeCompare(a[payload.sortBy])
+      }
+      return a[payload.sortBy].localeCompare(b[payload.sortBy])
+    }),
+    payload.search
+  )
+}
+
+let z = (rec, cat) => {
+  let y = []
+  cat.forEach((category) => {
+    y.push({ name: category.name, sum: 0 })
+  })
+  rec.forEach((receipt) => {
+    receipt.items.forEach((item) => {
+      y.forEach((category) => {
+        if (item.category.name === category.name) {
+          category.sum += +item.price
+        }
       })
     })
-    return y
-  }
+  })
+  return y
+}
+
+function Expenses() {
+  const [search, setSearch] = useState('')
+  const [sortBy, setSortBy] = useState(null)
+  const [reverseSortDirection, setReverseSortDirection] = useState(false)
+
+  const [receipts, setReceipts] = useState([])
 
   const fetchData = async () => {
     const sss = await Promise.all([axiosPrivateInstance.get('receipts'), axiosPrivateInstance.get('receipts/category/')])
@@ -60,6 +122,19 @@ function Expenses() {
   useEffect(() => {
     fetchData()
   }, [])
+
+  const setSorting = (field, isNumber = false) => {
+    const reversed = field === sortBy ? !reverseSortDirection : false
+    setReverseSortDirection(reversed)
+    setSortBy(field)
+    setReceipts((receipt) => sortData(receipt, { sortBy: field, reversed, search, isNumber }))
+  }
+
+  const handleSearchChange = (event) => {
+    const { value } = event.currentTarget
+    setSearch(value)
+    setReceipts((receipt) => sortData(receipt, { sortBy, reversed: reverseSortDirection, search: value, isNumber: true }))
+  }
 
   ChartJS.register(ArcElement, Tooltip, Legend)
   const data = {
@@ -84,21 +159,48 @@ function Expenses() {
   ))
 
   return (
-    <div>
-      <ScrollArea onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
-        <Table sx={{ minWidth: 700 }}>
-          <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+    <SimpleGrid
+      cols={2}
+      spacing="lg"
+      breakpoints={[
+        { maxWidth: 'md', cols: 2, spacing: 'sm' },
+        { maxWidth: 'xs', cols: 1, spacing: 'sm' }
+      ]}
+      style={{ border: '1px solid violet', width: '100%' }}
+    >
+      <div>
+        <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
+        <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' }}>
+          <thead>
             <tr>
               <th>Id</th>
-              <th>Name</th>
-              <th>Sum</th>
+              <Th sorted={sortBy === 'name'} reversed={reverseSortDirection} onSort={() => setSorting('name')}>
+                Name
+              </Th>
+              <Th sorted={sortBy === 'sum'} reversed={reverseSortDirection} onSort={() => setSorting('sum', true)}>
+                Sum
+              </Th>
             </tr>
           </thead>
-          <tbody>{rows}</tbody>
+          <tbody>
+            {rows.length > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td>
+                  <Text weight={500} align="center">
+                    Nothing found
+                  </Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </Table>
-      </ScrollArea>
-      <Pie data={data} />
-    </div>
+      </div>
+      <div style={{ width: '100%' }}>
+        <Pie data={data} />
+      </div>
+    </SimpleGrid>
   )
 }
 

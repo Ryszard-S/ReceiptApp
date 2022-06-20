@@ -131,3 +131,4 @@ dmypy.json
 # docker
 
 /sql/postgres-data
+.DS_store
