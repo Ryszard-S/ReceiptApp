@@ -56,7 +56,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-export function Sidebar() {
+export function Sidebar(props) {
   const { classes, cx } = useStyles()
   const location = useLocation()
   const x = location.pathname.split('/')
@@ -79,7 +79,7 @@ export function Sidebar() {
 
   return (
     <Fragment>
-      <Navbar height={700} width={{ sm: 170 }} p="md" className={classes.navbar}>
+      <Navbar height={700} width={{ sm: 170 }} p="md" className={classes.navbar} props={props}>
         <Navbar.Section grow>{links}</Navbar.Section>
       </Navbar>
       <Outlet />

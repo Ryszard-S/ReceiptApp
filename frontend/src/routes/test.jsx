@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react'
-import { createStyles, Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, SimpleGrid, Burger } from '@mantine/core'
+import { createStyles, Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, SimpleGrid, Burger, Header, AppShell, useMantineTheme, MediaQuery, Aside, Footer } from '@mantine/core'
 import { Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react'
+import Navbar from '../components/navbar'
+import { Sidebar } from '../components/sidebar'
 
 const useStyles = createStyles((theme) => ({
   th: {
@@ -97,6 +99,8 @@ function Test() {
   const [opened, setOpened] = useState(false)
   const title = opened ? 'Close navigation' : 'Open navigation'
 
+  const theme = useMantineTheme();
+
   const setSorting = (field, isNumber) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
     setReverseSortDirection(reversed)
@@ -119,6 +123,36 @@ function Test() {
   ))
 
   return (
+    <AppShell
+    navbarOffsetBreakpoint="sm"
+    asideOffsetBreakpoint="sm"
+    // fixed
+    // navbar={
+    //   <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+    //     <Text>Application navbar</Text>
+    //   </Navbar>
+    // }
+    navbar={<Sidebar hiddenBreakpoint="sm" hidden={!opened}></Sidebar>}
+    header={
+      <Header height={70} p="md">
+        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+            <Burger
+              opened={opened}
+              onClick={() => setOpened((o) => !o)}
+              size="sm"
+              color={theme.colors.gray[6]}
+              mr="xl"
+            />
+          </MediaQuery>
+
+          <Text>Application header</Text>
+        </div>
+      </Header>
+    }
+  >
+    <Text>Resize app to see responsive navbar in action</Text>
+  
     <SimpleGrid
       cols={4}
       spacing="lg"
@@ -170,6 +204,7 @@ function Test() {
       </Table>
     </ScrollArea>  */}
     </SimpleGrid>
+    </AppShell>
   )
 }
 
