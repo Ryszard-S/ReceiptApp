@@ -79,7 +79,7 @@ export function Sidebar(props) {
 
   return (
     <Fragment>
-      <Navbar height={700} width={{ sm: 170 }} p="md" className={classes.navbar} props={props}>
+      <Navbar height={700} width={{ sm: 170 }} p="md" className={classes.navbar} {...props}>
         <Navbar.Section grow>{links}</Navbar.Section>
       </Navbar>
       <Outlet />

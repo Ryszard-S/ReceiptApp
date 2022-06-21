@@ -99,7 +99,7 @@ function Test() {
   const [opened, setOpened] = useState(false)
   const title = opened ? 'Close navigation' : 'Open navigation'
 
-  const theme = useMantineTheme();
+  const theme = useMantineTheme()
 
   const setSorting = (field, isNumber) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
@@ -124,57 +124,46 @@ function Test() {
 
   return (
     <AppShell
-    navbarOffsetBreakpoint="sm"
-    asideOffsetBreakpoint="sm"
-    // fixed
-    // navbar={
-    //   <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-    //     <Text>Application navbar</Text>
-    //   </Navbar>
-    // }
-    navbar={<Sidebar hiddenBreakpoint="sm" hidden={!opened}></Sidebar>}
-    header={
-      <Header height={70} p="md">
-        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-            <Burger
-              opened={opened}
-              onClick={() => setOpened((o) => !o)}
-              size="sm"
-              color={theme.colors.gray[6]}
-              mr="xl"
-            />
-          </MediaQuery>
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
+      fixed
+      navbar={<Sidebar hiddenBreakpoint="sm" hidden={!opened}></Sidebar>}
+      header={
+        <Navbar height={70} p="md">
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger opened={opened} onClick={() => setOpened((o) => !o)} size="sm" color={theme.colors.gray[6]} mr="xl" />
+            </MediaQuery>
 
-          <Text>Application header</Text>
-        </div>
-      </Header>
-    }
-  >
-    <Text>Resize app to see responsive navbar in action</Text>
-  
-    <SimpleGrid
-      cols={4}
-      spacing="lg"
-      breakpoints={[
-        { maxWidth: 'md', cols: 3, spacing: 'md' },
-        { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-        { maxWidth: 'xs', cols: 1, spacing: 'sm' }
-      ]}
-      style={{ border: '1px solid violet' }}
+            <Text>Application header</Text>
+          </div>
+        </Navbar>
+      }
     >
-      <Burger opened={opened} onClick={() => setOpened((o) => !o)} title={title} />
-      {opened && (
-        <Fragment>
-          <div style={{ border: '1px solid red' }}>1</div>
-          <div style={{ border: '1px solid red' }}>2</div>
-        </Fragment>
-      )}
+      <Text>Resize app to see responsive navbar in action</Text>
 
-      <div style={{ border: '1px solid red' }}>3</div>
-      <div style={{ border: '1px solid red' }}>4</div>
-      <div style={{ border: '1px solid red' }}>5</div>
-      {/* <ScrollArea>
+      <SimpleGrid
+        cols={4}
+        spacing="lg"
+        breakpoints={[
+          { maxWidth: 'md', cols: 3, spacing: 'md' },
+          { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+          { maxWidth: 'xs', cols: 1, spacing: 'sm' }
+        ]}
+        style={{ border: '1px solid violet' }}
+      >
+        <Burger opened={opened} onClick={() => setOpened((o) => !o)} title={title} />
+        {opened && (
+          <Fragment>
+            <div style={{ border: '1px solid red' }}>1</div>
+            <div style={{ border: '1px solid red' }}>2</div>
+          </Fragment>
+        )}
+
+        <div style={{ border: '1px solid red' }}>3</div>
+        <div style={{ border: '1px solid red' }}>4</div>
+        <div style={{ border: '1px solid red' }}>5</div>
+        {/* <ScrollArea>
       <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
       <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' , minWidth: 700}}>
         <thead>
@@ -203,7 +192,7 @@ function Test() {
         </tbody>
       </Table>
     </ScrollArea>  */}
-    </SimpleGrid>
+      </SimpleGrid>
     </AppShell>
   )
 }
