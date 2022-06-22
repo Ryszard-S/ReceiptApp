@@ -28,8 +28,16 @@ SECRET_KEY = 'django-insecure-zkrh#i^t64k=^(-c2awapz+b1p*rrqn&l6y)l-$a&!r$*76*v6
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG'))
-print(DEBUG)
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['.localhost', 'rachunek.herokuapp.com']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Application definition
 
