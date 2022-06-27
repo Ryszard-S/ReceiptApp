@@ -10,18 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 load_dotenv()
-import dj_database_url
 
 
 # import django_heroku
 # django_heroku.settings(locals())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print("BASE DIR !!!!",BASE_DIR)
+print("BASE DIR !!!!", BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -31,16 +31,15 @@ SECRET_KEY = 'django-insecure-zkrh#i^t64k=^(-c2awapz+b1p*rrqn&l6y)l-$a&!r$*76*v6
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG'))
+print('DEBUG= ', DEBUG)
 
-ALLOWED_HOSTS = ['.localhost', 'rachunek.herokuapp.com']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', 'rachunek.herokuapp.com']
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'build', 'static')]
 
 # Application definition
 
@@ -57,6 +56,7 @@ INSTALLED_APPS = [
     'authorization',
     'api',
     'receipt',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +75,8 @@ ROOT_URLCONF = 'ReceiptApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'build')],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,7 +103,8 @@ WSGI_APPLICATION = 'ReceiptApp.wsgi.application'
 #     }
 # }
 
-DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600), 'OPTIONS': {'sslmode': 'require'}}
+DATABASES = {'default': dj_database_url.parse(os.environ.get(
+    'DATABASE_URL'), conn_max_age=600), 'OPTIONS': {'sslmode': 'require'}}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -159,11 +160,12 @@ REST_FRAMEWORK = {
 #     "http://127.0.0.1:3000",
 # ]
 
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+# If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:3000',
 ]
