@@ -3,9 +3,8 @@ import { Routes, Route } from 'react-router-dom'
 import { Home } from 'tabler-icons-react'
 import Navbar from './components/navbar'
 import Jr from './routes/jr'
-import { Login } from './routes/login'
+import Login from './routes/login'
 import PrivateRoute from './routes/private-route/PrivateRoute'
-import { Register } from './routes/register'
 
 function App() {
   return (

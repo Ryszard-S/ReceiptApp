@@ -1,7 +1,8 @@
-import React, { Children, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Header, Container, Button, createStyles } from '@mantine/core'
 import { Receipt } from 'tabler-icons-react'
 import { Link } from 'react-router-dom'
+import DummyComponent from './dummyComponent'
 
 const HEADER_HEIGHT = 60
 
@@ -15,7 +16,7 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-export default function Navbar({children}) {
+function Navbar({children}) {
   const { classes } = useStyles()
 
   return (
@@ -29,9 +30,12 @@ export default function Navbar({children}) {
             <Button radius="xl" sx={{ height: 30 }}>
               Login
             </Button>
+            <DummyComponent />
           </Link>
         </Container>
       </Header>
     </Fragment>
   )
 }
+
+export default Navbar
