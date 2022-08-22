@@ -1,5 +1,6 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const { ProvidePlugin } = require('webpack')
 
 module.exports = {
   entry: './frontend/src/index.js',
@@ -9,11 +10,14 @@ module.exports = {
     filename: '[name].js'
   },
 
-  // plugins: [
-  //     new HTMLWebpackPlugin({
-  //         template: './frontend/src/index.html'
-  //     })
-  // ],
+  plugins: [
+    new HTMLWebpackPlugin({
+      template: './frontend/src/index.html'
+    }),
+    new ProvidePlugin({
+      React: 'react' // automatically import react where needed
+    })
+  ],
 
   module: {
     rules: [
@@ -31,5 +35,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.js', '.jsx']
+  },
+  devServer: {
+    compress: true,
+    historyApiFallback: true,
+    open: true
   }
 }

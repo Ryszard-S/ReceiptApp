@@ -158,3 +158,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /frontend/static/frontend
+/static
