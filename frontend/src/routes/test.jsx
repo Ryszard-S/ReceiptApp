@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { createStyles, Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, SimpleGrid, Burger, Header, AppShell, useMantineTheme, MediaQuery, Aside, Footer } from '@mantine/core'
 import { Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react'
-import Navbar from '../components/navbar'
+import Navbar from '../components/header'
 import { Sidebar } from '../components/sidebar'
 
 const useStyles = createStyles((theme) => ({
@@ -163,35 +163,35 @@ function Test() {
         <div style={{ border: '1px solid red' }}>3</div>
         <div style={{ border: '1px solid red' }}>4</div>
         <div style={{ border: '1px solid red' }}>5</div>
-        {/* <ScrollArea>
-      <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
-      <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' , minWidth: 700}}>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <Th sorted={sortBy === 'name'} reversed={reverseSortDirection} onSort={() => setSorting('name')}>
-              Name
-            </Th>
-            <Th sorted={sortBy === 'sum'} reversed={reverseSortDirection} onSort={() => setSorting('sum', true)}>
-              Sum
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.length > 0 ? (
-            rows
-          ) : (
-            <tr>
-              <td colSpan={Object.keys(data[0]).length}>
-                <Text weight={500} align="center">
-                  Nothing found
-                </Text>
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-    </ScrollArea>  */}
+        <ScrollArea>
+          <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
+          <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed', minWidth: 700 }}>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <Th sorted={sortBy === 'name'} reversed={reverseSortDirection} onSort={() => setSorting('name')}>
+                  Name
+                </Th>
+                <Th sorted={sortBy === 'sum'} reversed={reverseSortDirection} onSort={() => setSorting('sum', true)}>
+                  Sum
+                </Th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.length > 0 ? (
+                rows
+              ) : (
+                <tr>
+                  <td colSpan={Object.keys(data[0]).length}>
+                    <Text weight={500} align="center">
+                      Nothing found
+                    </Text>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </ScrollArea>
       </SimpleGrid>
     </AppShell>
   )

@@ -43,8 +43,9 @@ function Receipts() {
       const res = await axiosPrivateInstance.get('/')
       setShopList(() => res.data.map((shop) => shop.name))
 
-      const cat = await axiosPrivateInstance.get('/receipts/category')
-      setCurrentCategoriesList(() => cat.data.map((c) => c.name))
+      const cat = await axiosPrivateInstance.get('/receipts/category').then((res) => console.log(res.data))
+
+      await setCurrentCategoriesList(() => cat.data.map((c) => c.name))
       console.log('shopList', shopList)
     },
     []

@@ -1,9 +1,10 @@
 import { useForm } from '@mantine/form'
-import { TextInput, PasswordInput, Paper, Group, Button, Anchor, Container } from '@mantine/core'
+import { TextInput, PasswordInput, Paper, Group, Button, Anchor, Container, Stack } from '@mantine/core'
 import { Link, useNavigate } from 'react-router-dom'
 import DivImageBackground from '../components/div-background'
 import { useContext, useEffect } from 'react'
 import AuthContext from '../contexts/AuthContext'
+import React from 'react'
 
 const Login = (props) => {
   let { loginUser, authTokens } = useContext(AuthContext)
@@ -14,7 +15,7 @@ const Login = (props) => {
       password: ''
     },
 
-    validationRules: {
+    validate: {
       username: (val) => val.length >= 6,
       password: (val) => val.length >= 6
     }
@@ -22,16 +23,16 @@ const Login = (props) => {
 
   useEffect(() => {
     if (authTokens) {
-      navigate('/jr', { replace: true })
+      navigate('/dashboard', { replace: true })
     }
-  })
+  }, [])
 
   return (
     <DivImageBackground>
       <Container>
         <Paper radius="md" p="xl" withBorder {...props}>
           <form onSubmit={form.onSubmit(loginUser)}>
-            <Group direction="column" grow>
+            <Stack>
               <TextInput
                 required
                 name="username"
@@ -50,10 +51,10 @@ const Login = (props) => {
                 onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
                 error={form.errors.password && 'Password should include at least 6 characters'}
               />
-            </Group>
+            </Stack>
 
             <Group position="apart" mt="xl">
-              <Anchor component={Link} to={'/register '} size="xs">
+              <Anchor component={Link} to={'/register'} size="xs">
                 Don't have an account? Register
               </Anchor>
               <Button type="submit">Login</Button>

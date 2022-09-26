@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 import { createStyles, Navbar } from '@mantine/core'
 import { List, Receipt2, TestPipe, ZoomMoney } from 'tabler-icons-react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
+import React from 'react'
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon')
@@ -50,7 +51,9 @@ const data = [
   { link: 'expenses', label: 'Expenses', icon: ZoomMoney },
   { link: 'categories', label: 'Categories', icon: List },
   { link: 'receipts', label: 'Receipts', icon: Receipt2 },
-  { link: 'test', label: 'test', icon: TestPipe }
+  { link: 'test', label: 'test', icon: TestPipe },
+  { link: 'test1', label: 'test1', icon: TestPipe },
+
 ]
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)

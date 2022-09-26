@@ -2,6 +2,7 @@ import { useForm } from '@mantine/form'
 import { TextInput, PasswordInput, Paper, Group, Button, Checkbox, Anchor, Container } from '@mantine/core'
 import { Link } from 'react-router-dom'
 import DivImageBackground from '../components/div-background'
+import React from 'react'
 
 export function Register(props) {
   const form = useForm({
@@ -9,7 +10,7 @@ export function Register(props) {
       email: '',
       name: '',
       password: '',
-      terms: true
+      terms: false
     },
 
     validationRules: {
