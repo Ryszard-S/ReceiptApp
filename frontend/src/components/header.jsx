@@ -19,19 +19,20 @@ function Header(props) {
   const { classes } = useStyles()
 
   return (
-    <NativeHeader height={HEADER_HEIGHT}>
-      
-      <Container className={classes.inner} fluid>
-      {props.buttonOpenSidebar}
-        <Receipt size={48} strokeWidth={2} color={'#65bf40'} />
-        <Link to={'/login'}>
-          <Button radius="xl" sx={{ height: 30 }}>
-            Login
-          </Button>
-          
-        </Link>
-      </Container>
-    </NativeHeader>
+    <Fragment>
+      <NativeHeader height={HEADER_HEIGHT}>
+        <Container className={classes.inner} fluid>
+          {props.buttonOpenSidebar}
+          <Receipt size={48} strokeWidth={2} color={'#65bf40'} />
+          <Link to={'/login'}>
+            <Button radius="xl" sx={{ height: 30 }}>
+              Login
+            </Button>
+          </Link>
+        </Container>
+      </NativeHeader>
+      {props.children}
+    </Fragment>
   )
 }
 

@@ -13,12 +13,12 @@ const Login = (props) => {
     initialValues: {
       username: '',
       password: ''
-    },
-
-    validate: {
-      username: (val) => val.length >= 6,
-      password: (val) => val.length >= 6
     }
+
+    // validate: {
+    //   username: (val) => val.length >= 6,
+    //   password: (val) => val.length >= 6
+    // }
   })
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Login = (props) => {
     <DivImageBackground>
       <Container>
         <Paper radius="md" p="xl" withBorder {...props}>
-          <form onSubmit={form.onSubmit(loginUser)}>
+          <form onSubmit={form.onSubmit(() => loginUser({ username: form.values.username, password: form.values.password }))}>
             <Stack>
               <TextInput
                 required
