@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Test1 = () => {
+  useEffect(() => {
+    console.log(process.env.REACT_CHECK)
+    const x = Boolean(Number(process.env.REACT_CHECK))
+    console.log(typeof x, x)
+  }, [])
   return (
     <div>
       Test1

@@ -1,6 +1,7 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { ProvidePlugin } = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: './frontend/src/index.js',
@@ -16,9 +17,10 @@ module.exports = {
     }),
     new ProvidePlugin({
       React: 'react' // automatically import react where needed
-    })
+    }),
+    new Dotenv()
   ],
-
+  devtool: false,
   module: {
     rules: [
       {

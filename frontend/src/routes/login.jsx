@@ -25,7 +25,7 @@ const Login = (props) => {
     if (authTokens) {
       navigate('/dashboard', { replace: true })
     }
-  }, [])
+  }, [authTokens])
 
   return (
     <DivImageBackground>
