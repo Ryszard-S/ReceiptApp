@@ -1,20 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import App from './App'
-import { AuthProvider } from './contexts/AuthContext'
+import { Provider } from 'react-redux'
+import { store } from './app/store'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { NotificationsProvider } from '@mantine/notifications'
+import { AuthProvider } from './contexts/AuthContext'
+
+// @ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <ThemeProvider>
       <NotificationsProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </AuthProvider>
+        <Provider store={store}>
+          <AuthProvider>
+            <BrowserRouter>
+              {/* <App /> */}
+              <Routes>
+                <Route path="/*" element={<App />} />
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
+        </Provider>
       </NotificationsProvider>
     </ThemeProvider>
   </React.StrictMode>

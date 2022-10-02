@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from receipt.models import Shop, Receipt, Category
 from receipt.serializers import ShopSerializer, ReceiptSerializer, CategorySerializer, ItemSerializer
 
+import time
+
 
 class ShopListView(generics.ListAPIView):
     queryset = Shop.objects.all()
@@ -15,6 +17,7 @@ class ShopListView(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         qs = Shop.objects.all()
         name = self.request.query_params.get('name')
+        time.sleep(5)
         if name is not None:
             qs = qs.filter(name__icontains=name)
         return qs
@@ -42,7 +45,8 @@ class ReceiptsListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         user_id = self.request.user.id
         data = self.request.data
-        serializer = self.get_serializer(data=data, context={'user_id': user_id})
+        serializer = self.get_serializer(
+            data=data, context={'user_id': user_id})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
@@ -61,7 +65,8 @@ class CategoryListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         user_id = self.request.user.id
         data = self.request.data
-        serializer = self.get_serializer(data=data, context={'user_id': user_id})
+        serializer = self.get_serializer(
+            data=data, context={'user_id': user_id})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
@@ -97,7 +102,8 @@ class ItemCreateAPIView(generics.CreateAPIView):
         user = self.request.user
         data = self.request.data
         receipt_id = kwargs.get('pk')
-        serializer = self.get_serializer(data=data, context={'user': user, 'receipt_id': receipt_id})
+        serializer = self.get_serializer(
+            data=data, context={'user': user, 'receipt_id': receipt_id})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 

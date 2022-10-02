@@ -2,6 +2,7 @@ import { Button, createStyles, ScrollArea, Table, TextInput } from '@mantine/cor
 import React, { Fragment, useEffect, useState } from 'react'
 import axiosPrivateInstance from '../utils/axiosPrivateInstance'
 import { showNotification } from '@mantine/notifications'
+import { useGetCategoriesQuery, useAddNewCategoryMutation } from '../features/categories/categoriesApiSlice'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -31,13 +32,10 @@ function Categories() {
   const [categories, setCategories] = useState([])
   const [newCategorie, setNewCategorie] = useState('')
 
-  useEffect(
-    () => async () => {
-      const cat = await axiosPrivateInstance.get('/receipts/category')
-      setCategories(cat?.data)
-    },
-    []
-  )
+  const { data: categoriess, isLoading, isError, isSuccess } = useGetCategoriesQuery()
+  const [addNewCategory, { isLoading: isAdding, isSuccess: isAdded, isError: isAddError }] = useAddNewCategoryMutation()
+
+  let content
 
   const deleteCategory = async (id) => {
     try {
@@ -51,16 +49,25 @@ function Categories() {
   }
 
   const addCategory = async () => {
-    try {
-      const res = await axiosPrivateInstance.post(`/receipts/category/`, { name: newCategorie })
-      console.log(res)
+    // try {
+    //   const res = await axiosPrivateInstance.post(`/receipts/category/`, { name: newCategorie })
+    //   console.log(res)
 
-      console.log(categories.filter((c) => c.id === res.data.id))
-      if (categories.filter((c) => c.id === res.data.id).length === 0) {
-        setCategories([...categories, res.data])
+    //   console.log(categories.filter((c) => c.id === res.data.id))
+    //   if (categories.filter((c) => c.id === res.data.id).length === 0) {
+    //     setCategories([...categories, res.data])
+    //     showNotification({ message: 'Category added', color: 'green' })
+    //   } else {
+    //     showNotification({ message: 'Category already existing', color: 'pink' })
+    //   }
+    // } catch (error) {
+    //   console.log(error)
+    //   showNotification({ message: 'Error adding category', color: 'red' })
+    // }
+    try {
+      addNewCategory({ name: newCategorie })
+      if (isAdded) {
         showNotification({ message: 'Category added', color: 'green' })
-      } else {
-        showNotification({ message: 'Category already existing', color: 'pink' })
       }
     } catch (error) {
       console.log(error)
@@ -68,39 +75,45 @@ function Categories() {
     }
   }
 
-  const rows = categories.map((row) => (
-    <tr key={row.id}>
-      <td>{row.id}</td>
-      <td>{row.name}</td>
-      <td>
-        <Button
-          onClick={() => {
-            deleteCategory(row.id)
-          }}
-        >
-          Delete
-        </Button>
-      </td>
-    </tr>
-  ))
+  if (isSuccess) {
+    console.log(categoriess)
 
-  return (
-    <Fragment>
-      <ScrollArea sx={{ height: 600 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
-        <Table sx={{ minWidth: 700 }}>
-          <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </ScrollArea>
-      <TextInput placeholder="Add new category" value={newCategorie} onChange={(event) => setNewCategorie(event.currentTarget.value)} />
-      <Button onClick={addCategory}>Add</Button>
-    </Fragment>
-  )
+    const rows = categoriess.map((row) => (
+      <tr key={row.id}>
+        <td>{row.id}</td>
+        <td>{row.name}</td>
+        <td>
+          <Button
+            onClick={() => {
+              deleteCategory(row.id)
+            }}
+          >
+            Delete
+          </Button>
+        </td>
+      </tr>
+    ))
+
+    content = (
+      <Fragment>
+        <ScrollArea sx={{ height: 600 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
+          <Table sx={{ minWidth: 700 }}>
+            <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </ScrollArea>
+        <TextInput placeholder="Add new category" value={newCategorie} onChange={(event) => setNewCategorie(event.currentTarget.value)} />
+        <Button onClick={addCategory}>Add</Button>
+      </Fragment>
+    )
+  }
+
+  return content
 }
 
 export default Categories
