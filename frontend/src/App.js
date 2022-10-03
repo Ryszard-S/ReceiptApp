@@ -5,10 +5,15 @@ import { Routes, Route } from 'react-router-dom'
 import { Home } from 'tabler-icons-react'
 import Header from './components/header'
 import { selectCurrentToken, setCredentials } from './features/auth/authSlice'
+import Categories from './routes/categories'
 import Dashboard from './routes/dashboard'
+import Expenses from './routes/expenses'
 import Login from './routes/login'
 import PrivateRoute from './routes/private-route/PrivateRoute'
+import Receipts from './routes/receipts'
 import { Register } from './routes/register'
+import Test from './routes/test'
+import Test1 from './routes/test1'
 
 function App() {
   const tk = useSelector(selectCurrentToken)
@@ -35,7 +40,14 @@ function App() {
       </Header>
       <Routes>
         <Route element={<PrivateRoute />}>
-          <Route path={'/dashboard/*'} element={<Dashboard />} />
+          <Route path={'/dashboard/'} element={<Dashboard />} >
+
+        <Route path="/expenses" element={<Expenses />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/receipts" element={<Receipts />} />
+        <Route path="/test" element={<Test />} />
+        <Route path="/test1" element={<Test1 />} />
+</Route>
         </Route>
       </Routes>
     </Fragment>

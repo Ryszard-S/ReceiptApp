@@ -39,13 +39,7 @@ function Dashboard() {
       }
       navbar={<Sidebar hiddenBreakpoint="sm" hidden={!opened} onClick={() => setOpened((o) => !o)}></Sidebar>}
     >
-      <Routes>
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/receipts" element={<Receipts />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/test1" element={<Test1 />} />
-      </Routes>
+
     </AppShell>
   )
 }
