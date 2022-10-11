@@ -1,15 +1,11 @@
-import { Route, Routes } from 'react-router-dom'
-import { Sidebar } from '../components/sidebar'
-import Expenses from './expenses'
-import Categories from './categories'
-import Receipts from './receipts'
-import Test from './test'
-import CustomHeader from '../components/header'
-import { useEffect, useState } from 'react'
 import { AppShell, Burger, MediaQuery, useMantineTheme } from '@mantine/core'
+import { useEffect, useState } from 'react'
 import React from 'react'
-import Test1 from './test1'
 import { useSelector } from 'react-redux'
+import { Outlet } from 'react-router-dom'
+
+import CustomHeader from '../components/header'
+import { Sidebar } from '../components/sidebar'
 import { selectCurrentToken } from '../features/auth/authSlice'
 
 function Dashboard() {
@@ -39,7 +35,7 @@ function Dashboard() {
       }
       navbar={<Sidebar hiddenBreakpoint="sm" hidden={!opened} onClick={() => setOpened((o) => !o)}></Sidebar>}
     >
-
+      <Outlet />
     </AppShell>
   )
 }

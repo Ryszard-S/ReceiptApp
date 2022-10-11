@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentToken, setCredentials } from '../features/auth/authSlice'
 
 const Login = () => {
-  // let { loginUser, authTokens } = useContext(AuthContext)
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -25,7 +24,7 @@ const Login = () => {
     }
   })
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async () => {
     console.log('form.values', form.values)
     try {
       const { token } = await login({ username: form.values.username, password: form.values.password }).unwrap()

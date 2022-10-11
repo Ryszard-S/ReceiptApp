@@ -1,10 +1,12 @@
+import { Center, Group, SimpleGrid, Table, Text, TextInput, UnstyledButton, createStyles } from '@mantine/core'
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import axiosPrivateInstance from '../utils/axiosPrivateInstance'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import React from 'react'
 import { Pie } from 'react-chartjs-2'
-import { createStyles, ScrollArea, Table, UnstyledButton, Group, Text, Center, TextInput, SimpleGrid } from '@mantine/core'
-import { Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react'
+import { ChevronDown, ChevronUp, Search, Selector } from 'tabler-icons-react'
+
+import axiosPrivateInstance from '../utils/axiosPrivateInstance'
 
 const useStyles = createStyles((theme) => ({
   th: {

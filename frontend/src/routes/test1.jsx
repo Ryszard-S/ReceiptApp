@@ -1,10 +1,11 @@
-import React from 'react'
-import { useGetShopsQuery } from '../features/shops/shopsApiSlice'
 import { Loader, Notification } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import React from 'react'
+
+import { useGetShopsQuery } from '../features/shops/shopsApiSlice'
 
 const Test1 = () => {
-  const { data: shops, isLoading, isError, isSuccess } = useGetShopsQuery()
+  const { data: shops, isLoading, isError, isSuccess } = useGetShopsQuery({})
 
   const shopList = shops?.map((shop) => (
     <li key={shop.id}>
@@ -12,7 +13,7 @@ const Test1 = () => {
     </li>
   ))
 
-  let content
+  let content = <div />
   if (isLoading)
     showNotification({
       title: 'Loading...',

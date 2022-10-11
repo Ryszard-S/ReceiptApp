@@ -1,4 +1,5 @@
-import { createSelector, createEntityAdapter } from '@reduxjs/toolkit'
+import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
+
 import { apiSlice } from '../../app/api/apiSlice'
 
 const categoriesAdapter = createEntityAdapter({})
@@ -24,11 +25,18 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
         }
       }),
       invalidatesTags: ['Category']
+    }),
+    deleteCategory: builder.mutation({
+      query: (id) => ({
+        url: `/api/receipts/category/${id}/`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Category']
     })
   })
 })
 
-export const { useGetCategoriesQuery, useAddNewCategoryMutation } = categoriesApiSlice
+export const { useGetCategoriesQuery, useAddNewCategoryMutation, useDeleteCategoryMutation } = categoriesApiSlice
 
 export const selectCategoriesResult = categoriesApiSlice.endpoints.getCategories.select()
 

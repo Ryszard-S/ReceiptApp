@@ -1,8 +1,8 @@
-import { Button, createStyles, ScrollArea, Table, TextInput } from '@mantine/core'
-import React, { Fragment, useEffect, useState } from 'react'
-import axiosPrivateInstance from '../utils/axiosPrivateInstance'
+import { Button, ScrollArea, Table, TextInput, createStyles } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useGetCategoriesQuery, useAddNewCategoryMutation } from '../features/categories/categoriesApiSlice'
+import React, { Fragment, useState } from 'react'
+
+import { useAddNewCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -29,41 +29,15 @@ const useStyles = createStyles((theme) => ({
 function Categories() {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
-  const [categories, setCategories] = useState([])
   const [newCategorie, setNewCategorie] = useState('')
 
-  const { data: categoriess, isLoading, isError, isSuccess } = useGetCategoriesQuery()
+  const { data: categories, isLoading, isError, isSuccess } = useGetCategoriesQuery({})
   const [addNewCategory, { isLoading: isAdding, isSuccess: isAdded, isError: isAddError }] = useAddNewCategoryMutation()
+  const [deleteCategory, { isLoading: isDeleting, isSuccess: isDeleted, isError: isDeleteError }] = useDeleteCategoryMutation()
 
-  let content
-
-  const deleteCategory = async (id) => {
-    try {
-      await axiosPrivateInstance.delete(`/receipts/category/${id}/delete`)
-      showNotification({ message: 'Category deleted', color: 'orange' })
-      setCategories(categories.filter((c) => c.id !== id))
-    } catch (error) {
-      console.log(error)
-      showNotification({ message: 'Error deleting category', color: 'red' })
-    }
-  }
+  let content = <Fragment />
 
   const addCategory = async () => {
-    // try {
-    //   const res = await axiosPrivateInstance.post(`/receipts/category/`, { name: newCategorie })
-    //   console.log(res)
-
-    //   console.log(categories.filter((c) => c.id === res.data.id))
-    //   if (categories.filter((c) => c.id === res.data.id).length === 0) {
-    //     setCategories([...categories, res.data])
-    //     showNotification({ message: 'Category added', color: 'green' })
-    //   } else {
-    //     showNotification({ message: 'Category already existing', color: 'pink' })
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    //   showNotification({ message: 'Error adding category', color: 'red' })
-    // }
     try {
       addNewCategory({ name: newCategorie })
       if (isAdded) {
@@ -75,17 +49,30 @@ function Categories() {
     }
   }
 
-  if (isSuccess) {
-    console.log(categoriess)
+  const onDeleteCategory = async (id) => {
+    try {
+      console.log('id', id)
+      deleteCategory(id)
+      if (isDeleted) {
+        showNotification({ message: 'Category deleted', color: 'orange' })
+      }
+    } catch (error) {
+      console.log(error)
+      showNotification({ message: 'Error deleting category', color: 'red' })
+    }
+  }
 
-    const rows = categoriess.map((row) => (
+  if (isSuccess) {
+    console.log(categories)
+
+    const rows = categories.map((row, index) => (
       <tr key={row.id}>
-        <td>{row.id}</td>
+        <td>{index + 1}</td>
         <td>{row.name}</td>
         <td>
           <Button
             onClick={() => {
-              deleteCategory(row.id)
+              onDeleteCategory(row.id)
             }}
           >
             Delete

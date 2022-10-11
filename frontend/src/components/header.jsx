@@ -1,7 +1,11 @@
+import { Container, Header as NativeHeader, UnstyledButton, createStyles } from '@mantine/core'
 import React, { Fragment } from 'react'
-import { Header as NativeHeader, Container, Button, createStyles, ActionIcon, UnstyledButton } from '@mantine/core'
-import { Receipt } from 'tabler-icons-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { LayoutDashboard, Login, Logout, Receipt } from 'tabler-icons-react'
+
+import { selectCurrentToken } from '../features/auth/authSlice'
+import ButtonLink from './buttonWithLink'
 
 const HEADER_HEIGHT = 60
 
@@ -15,30 +19,48 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-function Header(props) {
+function Header({ buttonOpenSidebar }) {
   const { classes } = useStyles()
   const navigate = useNavigate()
+  const isLogin = useSelector(selectCurrentToken)
 
   const redirectToHomePage = () => {
     navigate('/')
+  }
+
+  const location = useLocation()
+  console.log(location)
+  console.log(location.pathname)
+  let homepage = false
+  if (location.pathname === '/') {
+    homepage = true
+    console.log("I'm on the home page")
   }
 
   return (
     <Fragment>
       <NativeHeader height={HEADER_HEIGHT}>
         <Container className={classes.inner} fluid>
-          {props.buttonOpenSidebar}
+          {buttonOpenSidebar}
           <UnstyledButton>
             <Receipt size={48} strokeWidth={2} color={'#65bf40'} onClick={redirectToHomePage} />
           </UnstyledButton>
-          <Link to={'/login'}>
-            <Button radius="xl" sx={{ height: 30 }}>
+          {homepage && (
+            <ButtonLink linkTo="/dashboard" leftIcon={<LayoutDashboard />}>
+              Dashboard
+            </ButtonLink>
+          )}
+          {isLogin ? (
+            <ButtonLink linkTo="/logout" leftIcon={<Logout />}>
+              Logout
+            </ButtonLink>
+          ) : (
+            <ButtonLink linkTo="/login" leftIcon={<Login />}>
               Login
-            </Button>
-          </Link>
+            </ButtonLink>
+          )}
         </Container>
       </NativeHeader>
-      {props.children}
     </Fragment>
   )
 }
