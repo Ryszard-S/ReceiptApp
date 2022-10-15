@@ -1,12 +1,12 @@
+import { NotificationsProvider } from '@mantine/notifications'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import App from './App'
 import { Provider } from 'react-redux'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+import App from './App'
 import { store } from './app/store'
 import { ThemeProvider } from './contexts/ThemeContext'
-import { NotificationsProvider } from '@mantine/notifications'
-import { AuthProvider } from './contexts/AuthContext'
 
 // @ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -15,14 +15,12 @@ root.render(
     <ThemeProvider>
       <NotificationsProvider>
         <Provider store={store}>
-          <AuthProvider>
-            <BrowserRouter>
-              {/* <App /> */}
-              <Routes>
-                <Route path="/*" element={<App />} />
-              </Routes>
-            </BrowserRouter>
-          </AuthProvider>
+          <BrowserRouter>
+            {/* <App /> */}
+            <Routes>
+              <Route path="/*" element={<App />} />
+            </Routes>
+          </BrowserRouter>
         </Provider>
       </NotificationsProvider>
     </ThemeProvider>

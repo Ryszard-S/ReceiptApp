@@ -6,7 +6,10 @@ export const ThemeProvider = ({ children }) => (
     withNormalizeCSS
     withGlobalStyles
     theme={{
-      fontFamily: 'Lato'
+      fontFamily: 'Lato',
+      other:{
+        headerHeight: 70
+      }
     }}
   >
     {children}

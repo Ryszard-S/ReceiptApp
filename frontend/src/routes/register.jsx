@@ -3,8 +3,10 @@ import { TextInput, PasswordInput, Paper, Group, Button, Checkbox, Anchor, Conta
 import { Link } from 'react-router-dom'
 import DivImageBackground from '../components/div-background'
 import React from 'react'
+import useTitle from '../hooks/useTitle'
 
 export function Register(props) {
+  useTitle('Register')
   const form = useForm({
     initialValues: {
       email: '',

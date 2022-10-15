@@ -1,6 +1,6 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const { ProvidePlugin } = require('webpack')
+const { ProvidePlugin, HotModuleReplacementPlugin } = require('webpack')
 const Dotenv = require('dotenv-webpack')
 
 module.exports = {
@@ -8,12 +8,14 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, './frontend/static/frontend'),
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/'
   },
 
   plugins: [
     new HTMLWebpackPlugin({
-      template: './frontend/src/index.html'
+      template: './frontend/src/index.html',
+      favicon: './frontend/static/favicon-32x32.png'
     }),
     new ProvidePlugin({
       React: 'react' // automatically import react where needed
@@ -38,9 +40,13 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+  cache: {
+    type: 'filesystem'
+  },
   devServer: {
-    compress: true,
+    compress: false,
     historyApiFallback: true,
-    open: true
+    open: true,
+    hot: true
   }
 }

@@ -1,10 +1,13 @@
 import { Loader, Notification } from '@mantine/core'
+import { useTimeout } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import React from 'react'
 
 import { useGetShopsQuery } from '../features/shops/shopsApiSlice'
+import useTitle from '../hooks/useTitle'
 
 const Test1 = () => {
+  useTitle('Test1')
   const { data: shops, isLoading, isError, isSuccess } = useGetShopsQuery({})
 
   const shopList = shops?.map((shop) => (
@@ -16,7 +19,7 @@ const Test1 = () => {
   let content = <div />
   if (isLoading)
     showNotification({
-      title: 'Loading...',
+      title: 'Loading...23',
       color: 'orange',
       message: 'Content is loading...'
     })

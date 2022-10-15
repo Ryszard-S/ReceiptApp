@@ -1,8 +1,11 @@
 import { Button, ScrollArea, Table, TextInput, createStyles } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import React, { Fragment, useState } from 'react'
+import ButtonDelete from '../components/buttonDelete'
 
+import DeleteButton from '../components/buttonDelete'
 import { useAddNewCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
+import useTitle from '../hooks/useTitle'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -30,6 +33,7 @@ function Categories() {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
   const [newCategorie, setNewCategorie] = useState('')
+  useTitle('Categories')
 
   const { data: categories, isLoading, isError, isSuccess } = useGetCategoriesQuery({})
   const [addNewCategory, { isLoading: isAdding, isSuccess: isAdded, isError: isAddError }] = useAddNewCategoryMutation()
@@ -43,6 +47,7 @@ function Categories() {
       if (isAdded) {
         showNotification({ message: 'Category added', color: 'green' })
       }
+      setNewCategorie('')
     } catch (error) {
       console.log(error)
       showNotification({ message: 'Error adding category', color: 'red' })
@@ -63,20 +68,12 @@ function Categories() {
   }
 
   if (isSuccess) {
-    console.log(categories)
-
     const rows = categories.map((row, index) => (
       <tr key={row.id}>
         <td>{index + 1}</td>
         <td>{row.name}</td>
         <td>
-          <Button
-            onClick={() => {
-              onDeleteCategory(row.id)
-            }}
-          >
-            Delete
-          </Button>
+          <ButtonDelete onClick={() => onDeleteCategory(row.id)} />
         </td>
       </tr>
     ))
@@ -84,7 +81,7 @@ function Categories() {
     content = (
       <Fragment>
         <ScrollArea sx={{ height: 600 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
-          <Table sx={{ minWidth: 700 }}>
+          <Table sx={{ minWidth: 400 }}>
             <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
               <tr>
                 <th>Id</th>

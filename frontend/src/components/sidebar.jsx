@@ -9,7 +9,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
   return {
     navbar: {
       backgroundColor: theme.colors.gray[3],
-      minHeight: 'calc(100vh - 61px)',
+      minHeight: `calc(100vh - ${theme.other.headerHeight}px)`,
       height: 'auto'
     },
 

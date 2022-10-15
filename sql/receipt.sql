@@ -803,6 +803,7 @@ COPY public.auth_user (id, password, last_login, is_superuser, username, first_n
 2	pbkdf2_sha256$320000$tzNka8csKMVey9MMTOdlA2$y6jAIQLblC0+vDUSVnfFvBk5vTji27mqiSFCkN5FnzA=	\N	f	jan			jan@jan.pl	f	t	2022-05-14 04:44:17.753631+02
 5	pbkdf2_sha256$320000$vSpFLGgr3PEM7JVZlIVCXP$7Cj8QmSIzoayGIx77Gl4aojFjPEOBTed8A6S5bXy++A=	\N	f	jan1			jan@jan.pl	f	t	2022-05-14 04:56:12.052519+02
 1	pbkdf2_sha256$320000$Edf1Ab04IkTNlZJ7yOgfRb$Dt28tzj3BCtNmrOfLyYriRqMpNS6e5tvY2BOUEXTx6A=	2022-05-17 04:05:47.21463+02	t	admin				t	t	2022-05-12 04:41:13.713264+02
+6   pbkdf2_sha256$390000$ryjnpqfimry1KhfDLj0fUV$kRGteF3Sa/gk6X7jU7a3z7zcoOZ6iPjahnoenET37QQ=    \N  t   username    user    fajny   email@admin.pl  t   t   2022-05-12 04:41:13.713264+02
 \.
 
 

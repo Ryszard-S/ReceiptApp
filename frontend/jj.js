@@ -177,3 +177,4 @@ arr3.sort((a, b) => {
 }
 )
 console.log(arr3)
+

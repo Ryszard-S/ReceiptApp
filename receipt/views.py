@@ -17,7 +17,7 @@ class ShopListView(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         qs = Shop.objects.all()
         name = self.request.query_params.get('name')
-        time.sleep(5)
+        # time.sleep(5)
         if name is not None:
             qs = qs.filter(name__icontains=name)
         return qs

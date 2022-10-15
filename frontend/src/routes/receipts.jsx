@@ -1,14 +1,18 @@
-import { Autocomplete, Button, createStyles, Divider, NativeSelect, NumberInput, ScrollArea, Table, TextInput } from '@mantine/core'
-import React, { Fragment, useEffect, useState } from 'react'
-import axiosPrivateInstance from '../utils/axiosPrivateInstance'
+import { Autocomplete, Button, Divider, NativeSelect, NumberInput, ScrollArea, Table, TextInput, createStyles } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
+import React, { Fragment, useEffect, useState } from 'react'
+
+import ButtonDelete from '../components/buttonDelete'
+import { useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
+import { useGetShopsQuery } from '../features/shops/shopsApiSlice'
+import useTitle from '../hooks/useTitle'
 
 const useStyles = createStyles((theme) => ({
   header: {
     position: 'sticky',
     top: 0,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: theme.white,
     transition: 'box-shadow 150ms ease',
 
     '&::after': {
@@ -27,9 +31,8 @@ const useStyles = createStyles((theme) => ({
 }))
 
 function Receipts() {
-  const [shopList, setShopList] = useState([])
+  useTitle('Receipts')
   const [currentShop, setCurrentShop] = useState('')
-  const [currentCategoriesList, setCurrentCategoriesList] = useState([])
   const [currentItemsList, setCurrentItemsList] = useState([])
   const [itemName, setItemName] = useState('')
   const [itemPrice, setItemPrice] = useState(0)
@@ -37,19 +40,18 @@ function Receipts() {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
   const [date, setDate] = useState()
+  const [errorInput, setErrorInput] = useState({
+    itemNameError: { error: false, message: 'at least one character' },
+    itemPriceError: { error: false, message: 'price 0' },
+    itemCategoryError: { error: false, message: 'select category' }
+  })
 
-  useEffect(
-    () => async () => {
-      const res = await axiosPrivateInstance.get('/')
-      setShopList(() => res.data.map((shop) => shop.name))
+  const { data: shops, isLoading, isError, isSuccess } = useGetShopsQuery({})
+  const { data: categories, isLoading: isCategoriesLoading, isError: isCategoriesError, isSuccess: isCategoriesSuccess } = useGetCategoriesQuery({})
 
-      const cat = await axiosPrivateInstance.get('/receipts/category').then((res) => console.log(res.data))
-
-      await setCurrentCategoriesList(() => cat.data.map((c) => c.name))
-      console.log('shopList', shopList)
-    },
-    []
-  )
+  useEffect(() => {
+    console.log(errorInput)
+  }, [errorInput])
 
   const submitReceipt = async (e) => {
     e.preventDefault()
@@ -75,64 +77,126 @@ function Receipts() {
   }
 
   const addNewItem = () => {
+    // if (itemName.length < 3) {
+    //   console.log('error less than 4')
+    //   setErrorInput((error) => {
+    //     return { ...error, itemNameError: { error: true, message: 'at least 3 characters' } }
+    //   })
+
+    //   return
+    // } else {
+    //   setErrorInput((error) => {
+    //     return { ...error, itemNameError: { error: false } }
+    //   })
+    // }
+
+    // if (itemPrice < 0.01) {
+    //   setErrorInput((error) => {
+    //     return { ...error, itemPriceError: { error: true, message: 'Price must be at lest 0.01' } }
+    //   })
+    //   return
+    // } else {
+    //   setErrorInput((error) => {
+    //     return { ...error, itemPriceError: { error: false } }
+    //   })
+    // }
+    // if (itemCategory.length < 1) {
+    //   setErrorInput((error) => {
+    //     return { ...error, itemCategoryError: { error: true, message: 'Choose category' } }
+    //   })
+    //   return
+    // } else {
+    //   setErrorInput((error) => {
+    //     return { ...error, itemCategoryError: { error: false } }
+    //   })
+    // }
+
     setCurrentItemsList([...currentItemsList, { name: itemName, price: itemPrice, category: itemCategory }])
     setItemName('')
     setItemCategory('')
     setItemPrice(0)
   }
+
+  let content = <Fragment />
+
   const rows = currentItemsList.map((item, index) => (
     <tr key={index}>
       <td>{index + 1}</td>
       <td>{item.name}</td>
       <td>{item.price}</td>
-      <td>{item.category}</td>
       <td>
-        <Button
+        <div> </div>
+        {item.category}
+      </td>
+      <td>
+        <ButtonDelete
+          sx={{ position: 'static' }}
           onClick={() => {
+            setCurrentItemsList(currentItemsList.filter((_, i) => i !== index))
+
             console.log(index)
           }}
-        >
-          Delete
-        </Button>
+        />
       </td>
     </tr>
   ))
 
-  return (
-    <Fragment>
-      <form>
-        <Autocomplete label="Shop name" placeholder="Pick one" data={shopList} onChange={setCurrentShop} />
-        <DatePicker placeholder="Pick date" label="Event date" onChange={setDate} mb={'xl'} />
-        <Divider my="xs" label="Items" labelPosition="center" mt={'xl'} />
-        <TextInput label="Item name" placeholder="Item name" onChange={(e) => setItemName(e.target.value)} value={itemName} />
-        <NumberInput label="Price" precision={2} step={0.01} onChange={(e) => setItemPrice(e)} value={itemPrice} />
-        <NativeSelect data={currentCategoriesList} placeholder="Pick one" label="Category" onChange={(e) => setItemCategory(e.target.value)} value={itemCategory} required />
-        <Button
-          onClick={() => {
-            addNewItem()
-          }}
-        >
-          Add item
-        </Button>
-        <ScrollArea sx={{ height: 400 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
-          <Table sx={{ minWidth: 700 }}>
-            <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Category</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
-        </ScrollArea>
-        <Button type="submit" onClick={(e) => submitReceipt(e)}>
-          Add Receipt
-        </Button>
-      </form>
-    </Fragment>
-  )
+  if (isLoading) {
+    content = <div>Loading...</div>
+  }
+  if (isSuccess && isCategoriesSuccess) {
+    content = (
+      <Fragment>
+        <form>
+          <Autocomplete label="Shop name" placeholder="Pick one" data={shops.map((shop) => shop.name)} onChange={setCurrentShop} />
+          <DatePicker placeholder="Pick date" label="Event date" onChange={setDate} mb={'xl'} />
+          <Divider my="xs" label="Items" labelPosition="center" mt={'xl'} />
+          <TextInput
+            error={errorInput.itemNameError.error && errorInput.itemNameError.message}
+            label="Item name"
+            placeholder="Item name"
+            onChange={(e) => setItemName(e.target.value)}
+            value={itemName}
+          />
+          <NumberInput error={errorInput.itemPriceError.error && errorInput.itemPriceError.message} label="Price" precision={2} step={0.01} onChange={(e) => setItemPrice(e)} value={itemPrice} />
+          <NativeSelect
+            error={errorInput.itemCategoryError.error && errorInput.itemCategoryError.message}
+            data={categories.map((category) => category.name)}
+            placeholder="Pick one"
+            label="Category"
+            onChange={(e) => setItemCategory(e.target.value)}
+            value={itemCategory}
+          />
+          <Button
+            onClick={() => {
+              addNewItem()
+            }}
+          >
+            Add item
+          </Button>
+          <ScrollArea sx={{ height: 300 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
+            <Table sx={{ minWidth: 700 }} highlightOnHover>
+              <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </Table>
+          </ScrollArea>
+          <Button type="submit" onClick={(e) => submitReceipt(e)}>
+            Add Receipt
+          </Button>
+        </form>
+      </Fragment>
+    )
+  }
+
+  return content
 }
 
 export default Receipts

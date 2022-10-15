@@ -1,17 +1,20 @@
+import { Anchor, Button, Checkbox, Container, Group, Paper, PasswordInput, Stack, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { TextInput, PasswordInput, Paper, Group, Button, Anchor, Container, Stack, Checkbox } from '@mantine/core'
-import { Link, useNavigate } from 'react-router-dom'
-import DivImageBackground from '../components/div-background'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import { useLoginMutation } from '../features/auth/authApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+
+import DivImageBackground from '../components/div-background'
+import { useLoginMutation } from '../features/auth/authApiSlice'
 import { selectCurrentToken, setCredentials } from '../features/auth/authSlice'
+import useTitle from '../hooks/useTitle'
 
 const Login = () => {
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  useTitle('Login')
 
   const [login, { isLoading }] = useLoginMutation()
 
@@ -28,7 +31,6 @@ const Login = () => {
     console.log('form.values', form.values)
     try {
       const { token } = await login({ username: form.values.username, password: form.values.password }).unwrap()
-      console.log('token', token)
       if (checked) localStorage.setItem('token', token)
       dispatch(setCredentials({ accessToken: token }))
       navigate('/dashboard')
@@ -40,15 +42,10 @@ const Login = () => {
   useEffect(() => {
     console.log('Token in auth', token)
     if (token) {
-      navigate('/dashboard', { replace: true })
+      console.log('usenavigate')
+      navigate(-2)
     }
-  }, [])
-
-  // useEffect(() => {
-  //   console.log(checked)
-
-  //   console.log('token from store', tk)
-  // }, [checked])
+  }, [token])
 
   return (
     <DivImageBackground>

@@ -5,7 +5,7 @@ const HEADER_HEIGHT = 61
 
 const useStyles = createStyles((theme) => ({
   inner: {
-    height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+    height: `calc(100vh - ${theme.other.headerHeight}px)`,
     backgroundPosition: `center`,
     backgroundRepeat: `no-repeat`,
     backgroundSize: `cover`,

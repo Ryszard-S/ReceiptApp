@@ -5,8 +5,9 @@ import { useEffect } from 'react'
 import React from 'react'
 import { Pie } from 'react-chartjs-2'
 import { ChevronDown, ChevronUp, Search, Selector } from 'tabler-icons-react'
+import useTitle from '../hooks/useTitle'
 
-import axiosPrivateInstance from '../utils/axiosPrivateInstance'
+
 
 const useStyles = createStyles((theme) => ({
   th: {
@@ -108,6 +109,7 @@ let z = (rec, cat) => {
 }
 
 function Expenses() {
+  useTitle('Expenses')
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
