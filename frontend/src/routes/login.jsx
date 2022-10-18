@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form'
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import DivImageBackground from '../components/div-background'
 import { useLoginMutation } from '../features/auth/authApiSlice'
@@ -13,6 +13,7 @@ import useTitle from '../hooks/useTitle'
 const Login = () => {
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const dispatch = useDispatch()
   useTitle('Login')
 
@@ -33,17 +34,21 @@ const Login = () => {
       const { token } = await login({ username: form.values.username, password: form.values.password }).unwrap()
       if (checked) localStorage.setItem('token', token)
       dispatch(setCredentials({ accessToken: token }))
-      navigate('/dashboard')
+      navigate('/dashboard/expenses')
     } catch (err) {
       console.log(err)
     }
   }
 
   useEffect(() => {
-    console.log('Token in auth', token)
     if (token) {
-      console.log('usenavigate')
-      navigate(-2)
+     
+      if (location.state?.from) {
+         console.log('usenavigate', location.state?.from)
+        navigate(location.state.from)
+      } else {
+        navigate('/')
+      }
     }
   }, [token])
 

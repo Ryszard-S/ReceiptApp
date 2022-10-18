@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-function Header({ buttonOpenSidebar }) {
+function Header(props) {
   const { classes } = useStyles()
   const navigate = useNavigate()
   const isLogin = useSelector(selectCurrentToken)
@@ -37,7 +37,7 @@ function Header({ buttonOpenSidebar }) {
   return (
     <NativeHeader height={theme.other.headerHeight}>
       <Container className={classes.inner} fluid>
-        {buttonOpenSidebar}
+        {props.buttonOpenSidebar}
         <UnstyledButton>
           <Receipt size={48} strokeWidth={2} color={'#65bf40'} onClick={redirectToHomePage} />
         </UnstyledButton>

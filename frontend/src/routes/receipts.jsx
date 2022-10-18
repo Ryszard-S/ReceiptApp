@@ -5,6 +5,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 
 import ButtonDelete from '../components/buttonDelete'
 import { useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
+import { useAddReceiptMutation } from '../features/receipts/receiptsApiSlice'
 import { useGetShopsQuery } from '../features/shops/shopsApiSlice'
 import useTitle from '../hooks/useTitle'
 
@@ -48,7 +49,7 @@ function Receipts() {
 
   const { data: shops, isLoading, isError, isSuccess } = useGetShopsQuery({})
   const { data: categories, isLoading: isCategoriesLoading, isError: isCategoriesError, isSuccess: isCategoriesSuccess } = useGetCategoriesQuery({})
-
+  const [addReceipt, { isLoading: isAdding, isSuccess: isAdded, isError: isAddError }] = useAddReceiptMutation()
   useEffect(() => {
     console.log(errorInput)
   }, [errorInput])
@@ -61,11 +62,11 @@ function Receipts() {
       category: { name: item.category }
     }))
     try {
-      const res = await axiosPrivateInstance.post('receipts/create/', {
+      const res = await addReceipt({
         shop: { name: currentShop },
         date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
         items: items
-      })
+      }).unwrap()
       console.log(res)
       showNotification({ message: 'Receipt added', color: 'green' })
     } catch (error) {

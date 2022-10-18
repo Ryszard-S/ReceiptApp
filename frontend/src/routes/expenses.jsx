@@ -1,13 +1,14 @@
 import { Center, Group, SimpleGrid, Table, Text, TextInput, UnstyledButton, createStyles } from '@mantine/core'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useEffect } from 'react'
 import React from 'react'
 import { Pie } from 'react-chartjs-2'
 import { ChevronDown, ChevronUp, Search, Selector } from 'tabler-icons-react'
+
+import { useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
+import { useGetReceiptsQuery } from '../features/receipts/receiptsApiSlice'
 import useTitle from '../hooks/useTitle'
-
-
 
 const useStyles = createStyles((theme) => ({
   th: {
@@ -114,18 +115,26 @@ function Expenses() {
   const [sortBy, setSortBy] = useState(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
 
-  const [receipts, setReceipts] = useState([])
+  const { data: receiptsAPI = [], isLoading, isError, isSuccess } = useGetReceiptsQuery({})
+  const { data: categories = [], isLoading: isLoadingCategories, isError: isErrorCategories, isSuccess: isSuccessCategories } = useGetCategoriesQuery({})
 
-  const fetchData = async () => {
-    const sss = await Promise.all([axiosPrivateInstance.get('receipts'), axiosPrivateInstance.get('receipts/category/')])
-    const sumCategories = z(sss[0].data, sss[1].data)
-    setReceipts(sumCategories)
-  }
-  const randomColor = () => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+  const memoizedReceipts = useMemo(() => {
+    const rec = receiptsAPI.slice()
+    const cat = categories.slice()
+    const sumCategories = z(rec, cat)
+    return sumCategories
+  }, [receiptsAPI, categories])
+
+  const [receipts, setReceipts] = useState({})
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    const rec = receiptsAPI.slice()
+    const cat = categories.slice()
+    const sumCategories = z(rec, cat)
+    setReceipts(sumCategories)
+  }, [isSuccess, isSuccessCategories])
+
+  const randomColor = () => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
 
   const setSorting = (field, isNumber = false) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
@@ -141,71 +150,78 @@ function Expenses() {
   }
 
   ChartJS.register(ArcElement, Tooltip, Legend)
-  const data = {
-    labels: receipts.map((receipt) => receipt.name),
-    datasets: [
-      {
-        label: '# of Votes',
-        data: receipts.map((receipt) => receipt.sum),
-        backgroundColor: receipts.map(() => randomColor()),
-        borderColor: ['rgba(215, 215, 215, 0.8)'],
-        hoverBorderColor: ['rgba(152, 152, 152, 0.8)']
-      }
-    ]
+
+  let content = <div></div>
+
+  if (isSuccess) {
+    console.log(receipts)
+    const data = {
+      labels: receipts.map((receipt) => receipt.name),
+      datasets: [
+        {
+          label: '# of Votes',
+          data: receipts.map((receipt) => receipt.sum),
+          backgroundColor: receipts.map(() => randomColor()),
+          borderColor: ['rgba(215, 215, 215, 0.8)'],
+          hoverBorderColor: ['rgba(152, 152, 152, 0.8)']
+        }
+      ]
+    }
+
+    const rows = receipts.map((row, id) => (
+      <tr key={id}>
+        <td>{id + 1}</td>
+        <td>{row.name}</td>
+        <td>{row.sum}</td>
+      </tr>
+    ))
+    content = (
+      <SimpleGrid
+        cols={2}
+        spacing="lg"
+        breakpoints={[
+          { maxWidth: 'md', cols: 2, spacing: 'sm' },
+          { maxWidth: 'xs', cols: 1, spacing: 'sm' }
+        ]}
+        style={{ border: '1px solid violet', width: '100%' }}
+      >
+        <div>
+          <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
+          <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' }}>
+            <thead>
+              <tr>
+                <th style={{ width: '10%' }}>Id</th>
+                <Th sorted={sortBy === 'name'} reversed={reverseSortDirection} onSort={() => setSorting('name')}>
+                  Name
+                </Th>
+                <Th sorted={sortBy === 'sum'} reversed={reverseSortDirection} onSort={() => setSorting('sum', true)}>
+                  Sum
+                </Th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.length > 0 ? (
+                rows
+              ) : (
+                <tr>
+                  <td>
+                    <Text weight={500} align="center">
+                      Nothing found
+                    </Text>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
+        <div style={{ width: '100%' }}>
+          <Pie data={data} />
+        </div>
+      </SimpleGrid>
+    )
   }
 
-  const rows = receipts.map((row, id) => (
-    <tr key={id}>
-      <td>{id + 1}</td>
-      <td>{row.name}</td>
-      <td>{row.sum}</td>
-    </tr>
-  ))
-
-  return (
-    <SimpleGrid
-      cols={2}
-      spacing="lg"
-      breakpoints={[
-        { maxWidth: 'md', cols: 2, spacing: 'sm' },
-        { maxWidth: 'xs', cols: 1, spacing: 'sm' }
-      ]}
-      style={{ border: '1px solid violet', width: '100%' }}
-    >
-      <div>
-        <TextInput placeholder="Search by any field" mb="md" icon={<Search size={14} />} value={search} onChange={handleSearchChange} />
-        <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' }}>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <Th sorted={sortBy === 'name'} reversed={reverseSortDirection} onSort={() => setSorting('name')}>
-                Name
-              </Th>
-              <Th sorted={sortBy === 'sum'} reversed={reverseSortDirection} onSort={() => setSorting('sum', true)}>
-                Sum
-              </Th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length > 0 ? (
-              rows
-            ) : (
-              <tr>
-                <td>
-                  <Text weight={500} align="center">
-                    Nothing found
-                  </Text>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </div>
-      <div style={{ width: '100%' }}>
-        <Pie data={data} />
-      </div>
-    </SimpleGrid>
-  )
+  return content
 }
 
 export default Expenses

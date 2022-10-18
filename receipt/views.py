@@ -23,15 +23,6 @@ class ShopListView(generics.ListAPIView):
         return qs
 
 
-class ReceiptsListAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = ReceiptSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        qs = Receipt.objects.filter(user=user)
-        return qs
-
 
 class ReceiptsListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -50,7 +41,7 @@ class ReceiptsListCreateAPIView(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
-        return Response(data=data)
+        return Response(data=serializer.data, status=201)
 
 
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
