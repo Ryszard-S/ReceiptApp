@@ -1,9 +1,9 @@
 import { Center, Group, SimpleGrid, Table, Text, TextInput, UnstyledButton, createStyles } from '@mantine/core'
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { useMemo, useState } from 'react'
 import { useEffect } from 'react'
 import React from 'react'
-import { Pie } from 'react-chartjs-2'
+import { Bar, Pie } from 'react-chartjs-2'
 import { ChevronDown, ChevronUp, Search, Selector } from 'tabler-icons-react'
 
 import { useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
@@ -118,14 +118,15 @@ function Expenses() {
   const { data: receiptsAPI = [], isLoading, isError, isSuccess } = useGetReceiptsQuery({})
   const { data: categories = [], isLoading: isLoadingCategories, isError: isErrorCategories, isSuccess: isSuccessCategories } = useGetCategoriesQuery({})
 
+  const [receipts, setReceipts] = useState([])
+
   const memoizedReceipts = useMemo(() => {
     const rec = receiptsAPI.slice()
     const cat = categories.slice()
     const sumCategories = z(rec, cat)
+    console.log('memo')
     return sumCategories
   }, [receiptsAPI, categories])
-
-  const [receipts, setReceipts] = useState({})
 
   useEffect(() => {
     const rec = receiptsAPI.slice()
@@ -140,26 +141,29 @@ function Expenses() {
     const reversed = field === sortBy ? !reverseSortDirection : false
     setReverseSortDirection(reversed)
     setSortBy(field)
-    setReceipts((receipt) => sortData(receipt, { sortBy: field, reversed, search, isNumber }))
+    setReceipts(sortData(memoizedReceipts, { sortBy: field, reversed, search, isNumber }))
   }
 
   const handleSearchChange = (event) => {
     const { value } = event.currentTarget
     setSearch(value)
-    setReceipts((receipt) => sortData(receipt, { sortBy, reversed: reverseSortDirection, search: value, isNumber: true }))
+    setReceipts(sortData(memoizedReceipts, { sortBy, reversed: reverseSortDirection, search: value, isNumber: true }))
   }
 
-  ChartJS.register(ArcElement, Tooltip, Legend)
+  ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title)
 
   let content = <div></div>
 
   if (isSuccess) {
     console.log(receipts)
+    const options = {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
     const data = {
       labels: receipts.map((receipt) => receipt.name),
       datasets: [
         {
-          label: '# of Votes',
           data: receipts.map((receipt) => receipt.sum),
           backgroundColor: receipts.map(() => randomColor()),
           borderColor: ['rgba(215, 215, 215, 0.8)'],
@@ -215,7 +219,8 @@ function Expenses() {
           </Table>
         </div>
         <div style={{ width: '100%' }}>
-          <Pie data={data} />
+          {/* <Pie data={data} /> */}
+          <Bar options={options} data={data} />
         </div>
       </SimpleGrid>
     )
