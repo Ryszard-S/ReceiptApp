@@ -8,12 +8,12 @@ import Home from '../src/routes/home'
 import { setCredentials } from './features/auth/authSlice'
 import DashbordAppShell from './layouts/dashbordAppShell'
 import LayoutWithHeader from './layouts/layoutWithHeader'
+import AddReceipt from './routes/addReceipt'
 import Categories from './routes/categories'
 import Expenses from './routes/expenses'
 import Login from './routes/login'
 import Logout from './routes/logout'
 import PrivateRoute from './routes/private-route/PrivateRoute'
-import Receipts from './routes/receipts'
 import { Register } from './routes/register'
 import Test from './routes/test'
 import Test1 from './routes/test1'
@@ -43,9 +43,9 @@ function App() {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="dashboard/*" element={<DashbordAppShell />}>
-            <Route index path="expenses" element={<Expenses />} />
+            <Route path="expenses" element={<Expenses />} />
             <Route path="categories" element={<Categories />} />
-            <Route path="receipts" element={<Receipts />} />
+            <Route path="add_receipt" element={<AddReceipt />} />
             <Route path="test" element={<Test />} />
             <Route path="test1" element={<Test1 />} />
           </Route>

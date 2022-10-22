@@ -31,8 +31,8 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-function Receipts() {
-  useTitle('Receipts')
+function AddReceipt() {
+  useTitle('Add receipt')
   const [currentShop, setCurrentShop] = useState('')
   const [currentItemsList, setCurrentItemsList] = useState([])
   const [itemName, setItemName] = useState('')
@@ -200,4 +200,4 @@ function Receipts() {
   return content
 }
 
-export default Receipts
+export default AddReceipt

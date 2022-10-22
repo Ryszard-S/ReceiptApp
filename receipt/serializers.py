@@ -30,7 +30,6 @@ class CategorySerializer(serializers.ModelSerializer):
             category = Category.objects.get(name=new_category)
         except:
             category = None
-        print(category)
         if category is not None:
             category.user.add(user)
         else:
@@ -47,6 +46,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=False, read_only=False)
+    id = serializers.IntegerField(required=False)
 
     class Meta:
         model = Item
@@ -73,6 +73,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Receipt
         fields = ['id', 'shop', 'date', 'items']
+        depth = 1
 
     def create(self, validated_data, *args, **kwargs):
         items = validated_data.pop('items')
@@ -82,7 +83,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
         try:
             shop = Shop.objects.get(name=shop_name.get('name'))
         except ObjectDoesNotExist:
-            raise serializers.ValidationError(detail={"shop": "Shop not exist"})
+            raise serializers.ValidationError(detail={"shop": "Shop does not exist"})
         receipt = Receipt.objects.create(user=user, **validated_data, shop=shop)
 
         items_list = []
@@ -96,3 +97,37 @@ class ReceiptSerializer(serializers.ModelSerializer):
 
         Item.objects.bulk_create(items_list)
         return receipt
+
+    def update(self, instance, validated_data):
+
+        items = validated_data.pop('items')
+        shop_name = validated_data.pop('shop')
+        shop = Shop.objects.get(name=shop_name.get('name'))
+        instance.shop = shop
+        instance.date = validated_data.get('date')
+        instance.save()
+
+        keep_items = []
+        for item in items:
+            category_name = item.pop('category')
+            category = Category.objects.get(name=category_name.get('name'))
+            if "id" in item.keys():
+                if Item.objects.filter(id=item["id"]).exists():
+                    i = Item.objects.get(id=item["id"])
+                    i.name = item.get('name', i.name)
+                    i.price = item.get('price', i.price)
+                    i.category = category
+                    i.save()
+                    keep_items.append(i.id)
+                else:
+                    continue
+            else:
+                i = Item.objects.create(
+                    receipt=instance, category=category, **item)
+                keep_items.append(i.id)
+
+        for item in instance.items:
+            if item.id not in keep_items:
+                item.delete()
+        print(keep_items)
+        return instance

@@ -9,7 +9,7 @@ urlpatterns = [
     #
     # path('<int:pk>/', views.product_detail_view)
     path('', views.ShopListView.as_view()),
-    path('receipts/<int:pk>/additem/', views.ItemCreateAPIView.as_view()),
+    path('receipts/<int:pk>/', views.ReceiptRetrieveUpdateDestroyAPIView.as_view()),
     path('receipts/', views.ReceiptsListCreateAPIView.as_view()),
     path('receipts/category/', views.CategoryListCreateAPIView.as_view()),
     path('receipts/category/<int:pk>/', views.CategoryDestroyAPIView.as_view()),

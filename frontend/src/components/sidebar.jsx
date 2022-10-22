@@ -2,7 +2,7 @@ import { Navbar, createStyles } from '@mantine/core'
 import { Fragment, useState } from 'react'
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { List, Login, Receipt2, TestPipe, ZoomMoney } from 'tabler-icons-react'
+import { List, Login, PencilPlus, Receipt2, TestPipe, ZoomMoney } from 'tabler-icons-react'
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon')
@@ -57,7 +57,8 @@ const useStyles = createStyles((theme, _params, getRef) => {
 const data = [
   { link: 'expenses', label: 'Expenses', icon: ZoomMoney },
   { link: 'categories', label: 'Categories', icon: List },
-  { link: 'receipts', label: 'Receipts', icon: Receipt2 },
+  { link: 'add_receipt', label: 'Add receipt', icon: PencilPlus },
+  { link: 'receipts', label: 'Receipts list', icon: Receipt2 },
   { link: 'test', label: 'test', icon: TestPipe },
   { link: 'test1', label: 'test1', icon: Login }
 ]
