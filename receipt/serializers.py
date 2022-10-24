@@ -72,8 +72,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Receipt
-        fields = ['id', 'shop', 'date', 'items']
-        depth = 1
+        fields = ['id', 'shop', 'date', 'created_at', 'updated_at', 'items']
 
     def create(self, validated_data, *args, **kwargs):
         items = validated_data.pop('items')
@@ -99,12 +98,12 @@ class ReceiptSerializer(serializers.ModelSerializer):
         return receipt
 
     def update(self, instance, validated_data):
-
+        print('instance: ', instance)
         items = validated_data.pop('items')
         shop_name = validated_data.pop('shop')
         shop = Shop.objects.get(name=shop_name.get('name'))
         instance.shop = shop
-        instance.date = validated_data.get('date')
+        instance.date = validated_data.get('date', instance.date)
         instance.save()
 
         keep_items = []
@@ -122,12 +121,12 @@ class ReceiptSerializer(serializers.ModelSerializer):
                 else:
                     continue
             else:
-                i = Item.objects.create(
-                    receipt=instance, category=category, **item)
+                i = Item.objects.create(receipt=instance, category=category, **item)
                 keep_items.append(i.id)
 
-        for item in instance.items:
+        for item in items:
             if item.id not in keep_items:
-                item.delete()
+                Item.objects.filter(pk=item.id).delete()
+
         print(keep_items)
         return instance

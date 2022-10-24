@@ -40,8 +40,7 @@ class ReceiptsListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         user_id = self.request.user.id
         data = self.request.data
-        serializer = self.get_serializer(
-            data=data, context={'user_id': user_id})
+        serializer = self.get_serializer(data=data, context={'user_id': user_id})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
@@ -53,19 +52,18 @@ class ReceiptRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     serializer_class = ReceiptSerializer
 
     def get_queryset(self):
-        print(fg+'get_queryset'+attr)
+        print(fg + 'get_queryset' + attr)
         user = self.request.user
         receipt_id = self.kwargs.get('pk')
         qs = Receipt.objects.filter(user=user, id=receipt_id)
         return qs
 
     def update(self, request, *args, **kwargs):
-        print(fg+'update'+attr)
+        print(fg + 'update' + attr)
         user_id = self.request.user.id
         receipt_id = self.kwargs.get('pk')
         data = self.request.data
         instance = self.get_object()
-
         serializer = self.get_serializer(instance, data=data, context={'user_id': user_id, 'receipt_id': receipt_id})
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
@@ -85,8 +83,7 @@ class CategoryListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         user_id = self.request.user.id
         data = self.request.data
-        serializer = self.get_serializer(
-            data=data, context={'user_id': user_id})
+        serializer = self.get_serializer(data=data, context={'user_id': user_id})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 

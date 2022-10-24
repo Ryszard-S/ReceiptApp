@@ -12,6 +12,8 @@ class Receipt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
 
 class Item(models.Model):

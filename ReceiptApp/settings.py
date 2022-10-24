@@ -14,14 +14,14 @@ import dj_database_url
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv()
 
+load_dotenv()
 
 # import django_heroku
 # django_heroku.settings(locals())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print("BASE DIR !!!!", BASE_DIR)
+print("BASE DIR", BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -93,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ReceiptApp.wsgi.application'
 
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -151,7 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'authorization.authentication.TokenAuthentication',
-
+        'rest_framework.authentication.SessionAuthentication'
 
     ]
 }
@@ -172,3 +171,5 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:3000',
 ]
+
+APPEND_SLASH = True
