@@ -1,42 +1,16 @@
-import { Center, Group, SimpleGrid, Table, Text, TextInput, UnstyledButton, createStyles } from '@mantine/core'
-import { IconChevronDown, IconChevronUp, IconSearch, IconSelector } from '@tabler/icons'
+import { SimpleGrid } from '@mantine/core'
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
-import { useMemo, useState } from 'react'
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 import React from 'react'
-import { Bar, Pie } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 
 import { TableWithSort } from '../components/TableWithSort'
-import { useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
 import { useGetReceiptsQuery } from '../features/receipts/receiptsApiSlice'
 import useTitle from '../hooks/useTitle'
 
 let z = (ids, receipts) => {
   let y = []
   let categories = []
-  // // extract categories from receipts
-  //   for (let i = 0; i < receipts.length; i++) {
-  //     for (let j = 0; j < receipts[i].categories.length; j++) {
-  //       if (!categories.includes(receipts[i].categories[j])) {
-  //         categories.push(receipts[i].categories[j])
-  //       }
-  //     }
-  //   }
-  // // create array of objects with category and total
-  //   for (let i = 0; i < categories.length; i++) {
-  //     let total = 0
-
-  //     for (let j = 0; j < receipts.length; j++) {
-  //       for (let k = 0; k < receipts[j].categories.length; k++) {
-  //         if (categories[i] === receipts[j].categories[k]) {
-  //           total += receipts[j].total
-  //         }
-  //       }
-  //     }
-  //     y.push({ category: categories[i], total: total })
-  //   }
-  //   return y
-  // }
 
   ids?.forEach((id) => {
     receipts[id]?.items.forEach((i) => {
@@ -47,16 +21,6 @@ let z = (ids, receipts) => {
       }
     })
   })
-
-  // receipts?.forEatch((r) => {
-  //     r?.items.forEach((i) => {
-  //       if (categories.includes(i?.category?.name)) {
-  //         return
-  //       } else {
-  //         categories.push(i?.category?.name)
-  //       }
-  //     })
-  //   })
 
   console.log('categories', categories)
   categories.forEach((category) => {
@@ -77,17 +41,7 @@ let z = (ids, receipts) => {
     c.sum = Number(c.sum.toFixed(2))
     return { name: c.name, sum: c.sum }
   })
-  console.log('categories after add sum', y)
-  // receipts?.forEach((receipt) => {
-  //   receipt.items.forEach((item) => {
-  //     y.forEach((category) => {
-  //       if (item.category.name === category.name) {
-  //         category.sum += +item.price
-  //       }
-  //     })
-  //   })
-  // }
-  // )
+
   return y
 }
 
@@ -96,15 +50,10 @@ function Expenses() {
 
   const { data: receiptsAPI = [], isLoading, isError, isSuccess } = useGetReceiptsQuery({})
 
-  const [receipts, setReceipts] = useState([])
-
   const memoizedReceipts = useMemo(() => {
     const { ids, entities } = receiptsAPI
     console.log('entities', entities)
-    console.log('ids', ids)
-    // const cat = categories.slice()
     const sumCategories = z(ids, entities)
-    // console.log('memo')
     return sumCategories
   }, [isSuccess])
 

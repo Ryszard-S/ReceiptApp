@@ -1,9 +1,8 @@
 import { Button, ScrollArea, Table, TextInput, createStyles } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import React, { Fragment, useState } from 'react'
-import ButtonDelete from '../components/buttonDelete'
 
-import DeleteButton from '../components/buttonDelete'
+import ButtonDelete from '../components/buttonDelete'
 import { useAddNewCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery } from '../features/categories/categoriesApiSlice'
 import useTitle from '../hooks/useTitle'
 
