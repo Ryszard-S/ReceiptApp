@@ -13,7 +13,10 @@ import Categories from './routes/categories'
 import Expenses from './routes/expenses'
 import Login from './routes/login'
 import Logout from './routes/logout'
+import Prefetch from './routes/prefetch'
 import PrivateRoute from './routes/private-route/PrivateRoute'
+import ReceiptDetails from './routes/receiptDetails'
+import ReceiptList from './routes/receiptList'
 import { Register } from './routes/register'
 import Test from './routes/test'
 import Test1 from './routes/test1'
@@ -42,12 +45,17 @@ function App() {
 
       <Routes>
         <Route element={<PrivateRoute />}>
-          <Route path="dashboard/*" element={<DashbordAppShell />}>
-            <Route path="expenses" element={<Expenses />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="add_receipt" element={<AddReceipt />} />
-            <Route path="test" element={<Test />} />
-            <Route path="test1" element={<Test1 />} />
+          <Route element={<Prefetch />}>
+            <Route path="dashboard/*" element={<DashbordAppShell />}>
+              <Route path="expenses" element={<Expenses />} />
+              <Route path="categories" element={<Categories />} />
+              <Route path="add_receipt" element={<AddReceipt />} />
+              <Route path="receipt_list" element={<ReceiptList />}>
+                <Route path=":receiptId" element={<ReceiptDetails />} />
+              </Route>
+              <Route path="test" element={<Test />} />
+              <Route path="test1" element={<Test1 />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

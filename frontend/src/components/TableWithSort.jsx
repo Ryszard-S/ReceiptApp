@@ -1,6 +1,6 @@
-import { Center, Group, ScrollArea, Table, Text, TextInput, UnstyledButton, createStyles } from '@mantine/core'
+import { Center, Group, ScrollArea, Table, Text, UnstyledButton, createStyles } from '@mantine/core'
 import { keys } from '@mantine/utils'
-import { IconChevronDown, IconChevronUp, IconSearch, IconSelector } from '@tabler/icons'
+import { IconChevronDown, IconChevronUp, IconSelector } from '@tabler/icons'
 import { useState } from 'react'
 import React from 'react'
 
@@ -60,25 +60,16 @@ const checkDataType = (data) => {
   }
 }
 
-function filterData(data, search) {
-  const keysToSearch = ['shop']
-  console.log('keysToSearch', keysToSearch)
-  const query = search.toLowerCase().trim()
-  const resoults = data.filter((item) => keysToSearch.some((key) => item[key].toLowerCase().includes(query)))
-  //   return data.filter((item) => keys(data[0]).some((key) => item[key].toLowerCase().includes(query)))
-  return resoults
-}
-
 function sortData(data, payload) {
   const { sortBy } = payload
   console.log(payload)
 
   if (!sortBy) {
-    return filterData(data, payload.search)
+    return data
   }
   if (payload.dataType === 'number') {
     console.log('number')
-    return filterData(data, payload.search).sort((a, b) => {
+    return data.sort((a, b) => {
       if (payload.reversed) {
         return a[sortBy] - b[sortBy]
       } else {
@@ -88,7 +79,7 @@ function sortData(data, payload) {
   }
   if (payload.dataType === 'date') {
     console.log('date')
-    return filterData(data, payload.search).sort((a, b) => {
+    return data.sort((a, b) => {
       if (payload.reversed) {
         return a[sortBy] - b[sortBy]
       } else {
@@ -96,22 +87,18 @@ function sortData(data, payload) {
       }
     })
   } else
-    return filterData(
-      [...data].sort((a, b) => {
-        if (payload.reversed) {
-          return b[sortBy].localeCompare(a[sortBy])
-        }
+    return data.sort((a, b) => {
+      if (payload.reversed) {
+        return b[sortBy].localeCompare(a[sortBy])
+      }
 
-        return a[sortBy].localeCompare(b[sortBy])
-      }),
-      payload.search
-    )
+      return a[sortBy].localeCompare(b[sortBy])
+    })
 }
 
-export function TableSort({ data }) {
+export function TableWithSort({ data, onClick }) {
   console.log('data', data)
   const tableTitle = keys(data[0])
-  const [search, setSearch] = useState('')
   const [sortedData, setSortedData] = useState(data)
   const [sortBy, setSortBy] = useState(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
@@ -120,20 +107,14 @@ export function TableSort({ data }) {
     const reversed = field === sortBy ? !reverseSortDirection : false
     setReverseSortDirection(reversed)
     setSortBy(field)
-    setSortedData(sortData(data, { sortBy: field, reversed, search, dataType }))
-  }
-
-  const handleSearchChange = (event) => {
-    const { value } = event.currentTarget
-    setSearch(value)
-    setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }))
+    setSortedData(sortData(data, { sortBy: field, reversed, dataType }))
   }
 
   const rows = sortedData.map((row) => {
     console.log(row)
-    console.log(row[tableTitle[1]].toLocaleDateString())
+    // console.log(row[tableTitle[1]].toLocaleDateString())
     return (
-      <tr key={row[tableTitle[0]]}>
+      <tr id={row[tableTitle[0]]} key={row[tableTitle[0]]} onClick={onClick} style={{ cursor: 'pointer' }}>
         {tableTitle.map((title) => {
           if (checkDataType(row[title]) === 'date') {
             return <td>{row[title].toLocaleDateString()}</td>
@@ -141,58 +122,15 @@ export function TableSort({ data }) {
 
           return <td>{row[title].toString()}</td>
         })}
-        {/* <td>{row[tableTitle[0]].toString()}</td>
-        <td>{row[tableTitle[1]].toString()}</td>
-        <td>{row[tableTitle[2]].toString()}</td>
-        <td>{row[tableTitle[3]].toString()}</td> */}
       </tr>
     )
   })
 
-  //   const type = checkDataType(data[0][title])
-  //   if (type === 'date') {
-  //     console.log('date', title.toLocaleString())
-  //     return (
-  //       <Th sorted={sortBy === title} reversed={reverseSortDirection} onSort={() => setSorting(title, type)} key={index}>
-  //         {title.toLocaleString()}
-  //       </Th>
-  //     )
-  //   }
-
-  //   const checkDataType = (data) => {
-  //     if (typeof data === 'string') {
-  //       return 'string'
-  //     } else if (typeof data === 'number') {
-  //       return 'number'
-  //     } else if (typeof data === 'boolean') {
-  //       return 'boolean'
-  //     } else if (data instanceof Date) {
-  //       return 'date'
-  //     } else if (typeof data === 'object') {
-  //       return 'object'
-  //     } else {
-  //       return 'undefined'
-  //     }
-  //   }
-
   return (
     <ScrollArea>
-      <TextInput placeholder="Search by any field" mb="md" icon={<IconSearch size={14} stroke={1.5} />} value={search} onChange={handleSearchChange} />
-      <Table horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed', minWidth: 700 }}>
+      <Table highlightOnHover horizontalSpacing="md" verticalSpacing="xs" sx={{ tableLayout: 'fixed' }}>
         <thead>
           <tr>
-            {/* <Th sorted={sortBy === tableTitle[0]} reversed={reverseSortDirection} onSort={() => setSorting(tableTitle[0])}>
-              {tableTitle[0]}
-            </Th>
-            <Th sorted={sortBy === tableTitle[1]} reversed={reverseSortDirection} onSort={() => setSorting(tableTitle[1])}>
-              {tableTitle[1]}
-            </Th>
-            <Th sorted={sortBy === tableTitle[2]} reversed={reverseSortDirection} onSort={() => setSorting(tableTitle[2])}>
-              {tableTitle[2]}
-            </Th>
-            <Th sorted={sortBy === tableTitle[3]} reversed={reverseSortDirection} onSort={() => setSorting(tableTitle[3])}>
-              {tableTitle[3]}
-            </Th> */}
             {tableTitle.map((title, index) => {
               const type = checkDataType(data[0][title])
               return (

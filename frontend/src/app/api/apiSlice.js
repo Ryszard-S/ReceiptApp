@@ -49,6 +49,6 @@ const baseQueryWithAuth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithAuth,
-    tagTypes: ['Shop', 'Category'],
+    tagTypes: ['Shop', 'Category', 'Receipt'],
     endpoints: builder => ({})
 })

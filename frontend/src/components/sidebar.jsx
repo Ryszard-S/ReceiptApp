@@ -1,8 +1,8 @@
 import { Navbar, createStyles } from '@mantine/core'
+import { IconList, IconLogin, IconPencilPlus, IconReceipt2, IconTestPipe, IconZoomMoney } from '@tabler/icons'
 import { Fragment, useState } from 'react'
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { List, Login, PencilPlus, Receipt2, TestPipe, ZoomMoney } from 'tabler-icons-react'
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon')
@@ -55,12 +55,12 @@ const useStyles = createStyles((theme, _params, getRef) => {
 })
 
 const data = [
-  { link: 'expenses', label: 'Expenses', icon: ZoomMoney },
-  { link: 'categories', label: 'Categories', icon: List },
-  { link: 'add_receipt', label: 'Add receipt', icon: PencilPlus },
-  { link: 'receipts', label: 'Receipts list', icon: Receipt2 },
-  { link: 'test', label: 'test', icon: TestPipe },
-  { link: 'test1', label: 'test1', icon: Login }
+  { link: 'expenses', label: 'Expenses', icon: IconZoomMoney },
+  { link: 'categories', label: 'Categories', icon: IconList },
+  { link: 'add_receipt', label: 'Add receipt', icon: IconPencilPlus },
+  { link: 'receipt_list', label: 'Receipts list', icon: IconReceipt2 },
+  { link: 'test', label: 'test', icon: IconTestPipe },
+  { link: 'test1', label: 'test1', icon: IconLogin }
 ]
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)

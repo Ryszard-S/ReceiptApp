@@ -2,7 +2,7 @@ import { Container, Header as NativeHeader, Text, UnstyledButton, createStyles, 
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Login, Logout, Receipt } from 'tabler-icons-react'
+import { IconLayoutDashboard, IconLogin, IconLogout, IconReceipt  } from '@tabler/icons'
 
 import { selectCurrentToken } from '../features/auth/authSlice'
 import ButtonLink from './buttonWithLink'
@@ -39,19 +39,19 @@ function Header(props) {
       <Container className={classes.inner} fluid>
         {props.buttonOpenSidebar}
         <UnstyledButton>
-          <Receipt size={48} strokeWidth={2} color={'#65bf40'} onClick={redirectToHomePage} />
+          <IconReceipt size={48} strokeWidth={2} color={'#65bf40'} onClick={redirectToHomePage} />
         </UnstyledButton>
         {displayDashboardButton && (
-          <ButtonLink linkTo="/dashboard" leftIcon={<LayoutDashboard />}>
+          <ButtonLink linkTo="/dashboard" leftIcon={<IconLayoutDashboard />}>
             Dashboard
           </ButtonLink>
         )}
         {isLogin ? (
-          <ButtonLink linkTo="/logout" leftIcon={<Logout />}>
+          <ButtonLink linkTo="/logout" leftIcon={<IconLogout />}>
             Logout
           </ButtonLink>
         ) : (
-          <ButtonLink linkTo="/login" leftIcon={<Login />}>
+          <ButtonLink linkTo="/login" leftIcon={<IconLogin />}>
             Login
           </ButtonLink>
         )}

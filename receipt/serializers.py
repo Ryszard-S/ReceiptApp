@@ -82,7 +82,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
         try:
             shop = Shop.objects.get(name=shop_name.get('name'))
         except ObjectDoesNotExist:
-            raise serializers.ValidationError(detail={"shop": "Shop does not exist"})
+            raise serializers.ValidationError(detail={'shop': 'Shop does not exist'})
         receipt = Receipt.objects.create(user=user, **validated_data, shop=shop)
 
         items_list = []
@@ -91,7 +91,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
             try:
                 category = Category.objects.get(name=category_name.get('name'), user=user)
             except ObjectDoesNotExist:
-                raise serializers.ValidationError(detail={"category": "Category does not exist"})
+                raise serializers.ValidationError(detail={'category': 'Category does not exist'})
             items_list.append(Item(receipt=receipt, **item, category=category))
 
         Item.objects.bulk_create(items_list)
@@ -106,13 +106,21 @@ class ReceiptSerializer(serializers.ModelSerializer):
         instance.date = validated_data.get('date', instance.date)
         instance.save()
 
+        instance_items = instance.items
+        print('instance_items:', instance_items)
+        current_items_in_receipt = Item.objects.filter(receipt=instance.pk).values_list('id', flat=True)
+        print('current_items_in_receipt', current_items_in_receipt)
+
+        for i in current_items_in_receipt:
+            print(i)
+
         keep_items = []
         for item in items:
             category_name = item.pop('category')
             category = Category.objects.get(name=category_name.get('name'))
-            if "id" in item.keys():
-                if Item.objects.filter(id=item["id"]).exists():
-                    i = Item.objects.get(id=item["id"])
+            if 'id' in item.keys():
+                if Item.objects.filter(id=item['id']).exists():
+                    i = Item.objects.get(id=item['id'])
                     i.name = item.get('name', i.name)
                     i.price = item.get('price', i.price)
                     i.category = category
@@ -123,10 +131,10 @@ class ReceiptSerializer(serializers.ModelSerializer):
             else:
                 i = Item.objects.create(receipt=instance, category=category, **item)
                 keep_items.append(i.id)
-
-        for item in items:
-            if item.id not in keep_items:
-                Item.objects.filter(pk=item.id).delete()
+        print(keep_items)
+        for item_id in current_items_in_receipt:
+            if item_id not in keep_items:
+                Item.objects.filter(pk=item_id).delete()
 
         print(keep_items)
         return instance
