@@ -1,1 +1,0 @@
-from receipt.serializers import Shop

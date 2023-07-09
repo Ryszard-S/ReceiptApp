@@ -1,8 +1,9 @@
+import { Anchor, Button, Checkbox, Container, Group, Paper, PasswordInput, Stack, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { TextInput, PasswordInput, Paper, Group, Button, Checkbox, Anchor, Container } from '@mantine/core'
-import { Link } from 'react-router-dom'
-import DivImageBackground from '../components/div-background'
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+import DivImageBackground from '../components/div-background'
 import useTitle from '../hooks/useTitle'
 
 export function Register(props) {
@@ -15,8 +16,9 @@ export function Register(props) {
       terms: false
     },
 
-    validationRules: {
+    validate: {
       email: (val) => /^\S+@\S+$/.test(val),
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
       password: (val) => val.length >= 6
     }
   })
@@ -25,9 +27,9 @@ export function Register(props) {
     <DivImageBackground>
       <Container>
         <Paper radius="md" p="xl" withBorder {...props}>
-          <form onSubmit={form.onSubmit(() => {})}>
-            <Group direction="column" grow>
-              <TextInput label="Name" placeholder="Your name" value={form.values.name} onChange={(event) => form.setFieldValue('name', event.currentTarget.value)} />
+          <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <Stack>
+              <TextInput label="Name" placeholder="Your name" value={form.values.name} {...form.getInputProps('name')} />
 
               <TextInput
                 required
@@ -48,7 +50,7 @@ export function Register(props) {
               />
 
               <Checkbox label="I accept terms and conditions" checked={form.values.terms} onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)} />
-            </Group>
+            </Stack>
 
             <Group position="apart" mt="xl">
               <Anchor component={Link} to={'/login'} size="xs">

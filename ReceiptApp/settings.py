@@ -16,7 +16,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 # import django_heroku
 # django_heroku.settings(locals())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +29,7 @@ print("BASE DIR", BASE_DIR)
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DEBUG'))
+DEBUG = bool(int(os.environ.get('DEBUG')))
 print('DEBUG= ', DEBUG)
 
 ALLOWED_HOSTS = ['.localhost', '127.0.0.1', 'rachunek.herokuapp.com', 'receiptapp.onrender.com']
@@ -55,7 +54,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'authorization',
-    'api',
     'receipt',
     'frontend',
 ]
@@ -93,19 +91,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ReceiptApp.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('NAME'),
-#         'USER': os.environ.get('USER'),
-#         'PASSWORD': os.environ.get('PASSWORD'),
-#         'HOST': os.environ.get('HOST'),
-#         'PORT': os.environ.get('PORT'),
-#     }
-# }
-
-DATABASES = {'default': dj_database_url.parse(os.environ.get(
-    'DATABASE_URL'), conn_max_age=600), 'OPTIONS': {'sslmode': 'require'}}
+DATABASES = {'default': dj_database_url.config(conn_max_age=600),
+             'OPTIONS': {'sslmode': 'require'}}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
