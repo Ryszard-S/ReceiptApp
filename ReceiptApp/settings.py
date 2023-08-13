@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'authorization',
     'receipt',
-    'frontend',
+
 ]
 
 MIDDLEWARE = [
@@ -75,7 +75,7 @@ ROOT_URLCONF = 'ReceiptApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'build')],
+        # 'DIRS': [os.path.join(BASE_DIR, 'frontend', 'build')],
 
         'APP_DIRS': True,
         'OPTIONS': {
@@ -142,12 +142,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://example.com",
-#     "https://sub.example.com",
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-# ]
 
 # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 # CORS_ALLOW_ALL_ORIGINS = True
@@ -158,11 +152,13 @@ REST_FRAMEWORK = {
 # CORS_ALLOWED_ORIGIN_REGEXES = [
 #     'http://localhost:3000',
 # ]
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://receiptapp.onrender.com",
     "http://localhost:8080",
     "http://localhost:8000",
+    "http://localhost:5173"
 ]
 
 APPEND_SLASH = True

@@ -9,14 +9,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './frontend/static/frontend'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: path.resolve(__dirname, './frontend/static/frontend')
   },
 
   plugins: [
-    new HTMLWebpackPlugin({
-      template: './frontend/src/index.html',
-      favicon: './frontend/static/favicon-32x32.png'
-    }),
+    // new HTMLWebpackPlugin({
+    //   template: './frontend/src/index.html',
+    //   favicon: './frontend/static/favicon-32x32.png'
+    // }),
     new ProvidePlugin({
       React: 'react' // automatically import react where needed
     }),

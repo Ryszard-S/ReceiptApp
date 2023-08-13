@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('receipt.urls')),
     path('authorization/', include('authorization.urls')),
-    path('', include('frontend.urls')),
+    # path('', include('frontend.urls')),
     # match any url that doesn't start with api or admin
     # path(r'^((?!api|admin).)*$', include('frontend.urls')),
 
